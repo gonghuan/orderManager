@@ -2,6 +2,7 @@ package edu.seu.cs.controller;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +16,7 @@ public class UserController {
 	private UserService userService;
 	
 	@RequestMapping(value="getUserByName")
-	public @ResponseBody User getUserByName(HttpServletRequest request){
+	public @ResponseBody User getUserByName(HttpServletRequest request, HttpServletResponse response){
 		String userName = request.getParameter("userName");
 		User user = userService.selectByName(userName);
 		request.getSession().setAttribute("user", user);

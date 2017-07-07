@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.seu.cs.mapper.UserMapper">
-	<select id="selectByName" resultType="edu.seu.cs.model.User" parameterType="String">
-		select * from user where username = #{userName}
+	<resultMap id="BaseResultMap" type="edu.seu.cs.model.User">
+		<id column="clientid" property="clientId" />
+		<result column="clientkind" property="clientKind"></result>
+		<result column="isdouble" property="isDouble"></result>
+		<result column="code" property="code"></result>
+		<result column="shortname" property="shortName"></result>
+	</resultMap>
+	<select id="selectByName" resultMap="BaseResultMap" parameterType="String">
+		select clientid, clientkind, case when isdouble = 'F' then 0 else 1 end as isdouble, code, shortname
+		from client where shortname = #{userName}
 	</select>
 </mapper>
