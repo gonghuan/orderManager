@@ -24,7 +24,7 @@ public class OrderController {
 	public @ResponseBody boolean testInsert(){
 		SOrder sOrder = new SOrder();
 		SOrderDetail sOrderDetail = new SOrderDetail();
-		sOrder.setShortName("致远");
+		/*sOrder.setShortName("致远");
 		sOrder.setContator("贡欢");
 		sOrder.setPhone("121345");
 		sOrder.setTakeDate(new Date());
@@ -46,8 +46,25 @@ public class OrderController {
 		sOrder.setAckAppr(false);
 		sOrder.setFileCount(0);
 		sOrder.setExemanId(1);
-		orderService.insertSOrder(sOrder);
+		orderService.insertSOrder(sOrder);*/
 		
+		sOrderDetail.setGoodsId(400);
+		sOrderDetail.setPrice(10);
+		sOrderDetail.setQuantity(1);
+		sOrderDetail.setUnitPrice(10);
+		sOrderDetail.setUnitQty(1);
+		sOrderDetail.setTaxRate(0);
+		sOrderDetail.setAmount(10);
+		sOrderDetail.setTaxAmt(0);
+		sOrderDetail.setGoodsSamt(0);
+		sOrderDetail.setDisc(100);
+		sOrderDetail.setTakeQty(10);
+		sOrderDetail.setMnqty(0);
+		sOrderDetail.setReferCount(0);
+		sOrderDetail.setNprice(10);
+		sOrderDetail.setMrpsel(false);
+		sOrderDetail.setPresent(false);
+		orderService.insertSOrderDetail(sOrderDetail);
 		return true;
 	}
 }

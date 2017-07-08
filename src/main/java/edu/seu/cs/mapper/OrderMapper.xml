@@ -164,7 +164,7 @@
 			sorderid,
 			itemno,
 			unitid,
-			goodid,
+			goodsid,
 			<if test="price != null">
 				price,
 			</if>
@@ -183,44 +183,45 @@
 			<if test="amount != null">
 				amount,
 			</if>
-			<if test="taxAmt">
+			<if test="taxAmt != null">
 				taxamt,
 			</if>
-			<if test="goodsSamt">
-				goodssamt,
+			<if test="goodsSamt != null">
+				goodsamt,
 			</if>
-			<if test="disc">
+			<if test="disc != null">
 				disc,
 			</if>
-			<if test="takeQty">
-				taleqty,
+			<if test="takeQty != null">
+				takeqty,
 			</if>
-			<if test="mnqty">
+			<if test="mnqty != null">
 				mnqty,
 			</if>
-			<if test="memo">
+			<if test="memo != null">
 				memo,
 			</if>
-			<if test="referCount">
+			<if test="referCount != null">
 				refercount,
 			</if>
-			<if test="nprice">
+			<if test="nprice != null">
 				nprice,
 			</if>
-			<if test="mrpsel">
+			<if test="mrpsel != null">
 				mrpsel,
 			</if>
-			<if test="isPresent">
+			<if test="isPresent != null">
 				ispresent,
 			</if>
-			<if test="priceType">
+			<if test="priceType != null">
 				pricetype
 			</if>
+		</trim>
 			<trim prefix="values(" suffix=")" suffixOverrides=",">
 				(select max(sorderid) as sorderid from sorder),
-				(select max(itemno)+1 as itemno form sorderdetail where sorderid=(select max(sorderid) as sorderid from sorder)),
-				(select unitid from goodsunit where goodsid=#{goodsid}),
-				#{goodsid},
+				(select isnull(max(itemno), 0)+1 as itemno from sorderdetail where sorderid=(select max(sorderid) as sorderid from sorder)),
+				(select unitid from goodsunit where goodsid=#{goodsId}),
+				#{goodsId},
 				<if test="price != null">
 					#{price},
 				</if>
@@ -239,40 +240,39 @@
 				<if test="amount != null">
 					#{amount},
 				</if>
-				<if test="taxAmt">
+				<if test="taxAmt != null">
 					#{taxAmt},
 				</if>
-				<if test="goodsSamt">
+				<if test="goodsSamt != null">
 					#{goodsSamt},
 				</if>
-				<if test="disc">
+				<if test="disc != null">
 					#{disc},
 				</if>
-				<if test="takeQty">
-					#{taleQty},
+				<if test="takeQty != null">
+					#{takeQty},
 				</if>
-				<if test="mnqty">
+				<if test="mnqty != null">
 					#{mnqty},
 				</if>
-				<if test="memo">
+				<if test="memo != null">
 					#{memo},
 				</if>
-				<if test="referCount">
+				<if test="referCount != null">
 					#{referCount},
 				</if>
-				<if test="nprice">
+				<if test="nprice != null">
 					#{nprice},
 				</if>
-				<if test="mrpsel">
+				<if test="mrpsel != null">
 					#{mrpsel},
 				</if>
-				<if test="isPresent">
+				<if test="isPresent != null">
 					#{isPresent},
 				</if>
-				<if test="priceType">
+				<if test="priceType != null">
 					#{priceType}
 				</if>
 			</trim>
-		</trim>
 	</insert>
 </mapper>

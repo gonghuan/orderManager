@@ -23,7 +23,7 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public void insertSOrderDetail(SOrderDetail sOrderDetail) {
 		// TODO Auto-generated method stub
-		
+		orderMapper.insertSOrderDetail(sOrderDetail);
 	}
 
 }
