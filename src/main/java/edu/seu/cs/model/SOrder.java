@@ -21,7 +21,7 @@ public class SOrder {
 		this.shortName = shortName;
 	}
 	private int billTypeId;
-	private double tarRate;
+	private double taxRate;
 	private double disc;
 	private	int exemanId;
 	private double amount;
@@ -33,7 +33,21 @@ public class SOrder {
 	private boolean finished;
 	private int rptId;
 	private int templateId;
-	private int referCount;		
+	private int referCount;
+	private int printed;
+	private int exemanid;
+	public int getExemanid() {
+		return exemanid;
+	}
+	public void setExemanid(int exemanid) {
+		this.exemanid = exemanid;
+	}
+	public int getPrinted() {
+		return printed;
+	}
+	public void setPrinted(int printed) {
+		this.printed = printed;
+	}
 	private String phone;		//联系电话
 	private String contator;	//联系人
 	private boolean sendEmail;	//发送邮件标志
@@ -73,11 +87,11 @@ public class SOrder {
 	public void setBillTypeId(int billTypeId) {
 		this.billTypeId = billTypeId;
 	}
-	public double getTarRate() {
-		return tarRate;
+	public double getTaxRate() {
+		return taxRate;
 	}
-	public void setTarRate(double tarRate) {
-		this.tarRate = tarRate;
+	public void setTaxRate(double taxRate) {
+		this.taxRate = taxRate;
 	}
 	public double getDisc() {
 		return disc;

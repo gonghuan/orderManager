@@ -1,6 +1,7 @@
 package edu.seu.cs.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import edu.seu.cs.dto.GoodsInfoDto;
 import edu.seu.cs.service.GoodsService;
 
 @Controller
@@ -26,5 +28,17 @@ public class GoodsController {
 		String result = new String(bytes, "UTF-8");
 		System.out.println(result);
 		return resultSet;
+	}
+	
+	@RequestMapping(value="/getAllGoodsName")
+	public @ResponseBody List<String> getAllGoodsName(){
+		List<String> resultSet = goodsService.getAllGoodsName();
+		return resultSet;
+	}
+	
+	@RequestMapping(value="/getDetailGoodsInfoByName")
+	public @ResponseBody GoodsInfoDto getDetailGoodsInfoByName(@RequestParam String name){
+		GoodsInfoDto result = goodsService.getDetailGoodsInfoByName(name);
+		return result;
 	}
 }

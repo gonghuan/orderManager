@@ -5,7 +5,7 @@
 		<result column="code" property="code"></result>
 		<result column="name" property="name"></result>
 		<result column="unit" property="unit"></result>
-		<result column="spec" property="spec"></result>
+		<result column="specs" property="spec"></result>
 		<result column="onhand" property="onHand"></result>
 	</resultMap>
 	
@@ -13,15 +13,16 @@
 		select name from shop where code=#{bankCode}
 	</select>
 	
-	<select id="selectAllGoodsName" resultMap="String">
+	<select id="selectAllGoodsName" resultType="java.lang.String">
 		select distinct name from goods;
 	</select>
 	
-	<select id="getDetailGoodsInfoByName">
-		select goods.goodsid, goods.code, goods.name, goods.unitname, goods.spec, sum(detail.inqty - detail.outqty) as onhand 
+	<select id="getDetailGoodsInfoByName" resultMap="BaseResultMap">
+		select goods.goodsid, goods.code, goods.name, goods.unit, goods.specs, sum(detail.inqty - detail.outqty) as onhand 
 		from goods 
 		left join detailbillflow detail on goods.goodsid = detail.goodsid
-		where goods.name = #{name}
+		where goods.name like #{name}
+		group by goods.goodsid, goods.code, goods.name, goods.unit, goods.specs
 	</select>
 	
 </mapper>

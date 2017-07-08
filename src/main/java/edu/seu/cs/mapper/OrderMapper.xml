@@ -11,10 +11,7 @@
 			billdate,
 			
 			clientid,
-			
-			<if test="billTypeId != null">
-				billtypeid,
-			</if>
+						
 			<if test="taxRate != null">
 				taxrate,
 			</if>
@@ -34,7 +31,7 @@
 				shipto,
 			</if>
 			<if test="takeDate != null">
-				takedate
+				takedate,
 			</if>
 			<if test="opId != null">
 				opid,
@@ -85,14 +82,13 @@
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			(select max(sorderid)+1 as sorderid from sorder),
 			
-			(select 'XD-001-'||date||(select count(*)+1 from sorder where code like '%date%') as code)
-			 from (select convert(varchar(10), getdate(), 120) as date) 
+			((select 'XD-001-'+(select convert(varchar(10), getdate(), 120) as date)
+			+cast((select count(*)+1 from sorder where code like '%(select convert(varchar(10), getdate(), 120) as date)%') as varchar(4))as code)
+			 ), 
 			
 			(select getdate() as billdate),
-			(select clientid from client where shortname = #{shortName})
-			<if test="billTypeId != null">
-				#{billtypeId},
-			</if>
+			(select clientid from client where shortname = #{shortName}),
+			
 			<if test="taxRate != null">
 				#{taxRate},
 			</if>

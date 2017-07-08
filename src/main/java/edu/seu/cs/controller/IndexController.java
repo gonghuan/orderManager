@@ -15,4 +15,9 @@ public class IndexController {
 	public String getLogin(){
 		return "/login";
 	}
+	
+	@RequestMapping(value="test")
+	public String getTest(){
+		return "/test";
+	}
 }

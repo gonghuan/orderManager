@@ -1,11 +1,22 @@
 package edu.seu.cs.dto;
 
 public class GoodsInfoDto {
+	public int goodsId;
 	public String code;
 	public String name;
 	public String unit;	//基本单位
 	public String spec;		//规格
 	public double onHand;	//库存
+	
+	public int getGoodsId() {
+		return goodsId;
+	}
+	public void setGoodsId(int goodsId) {
+		this.goodsId = goodsId;
+	}
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
 	public String getCode() {
 		return code;
 	}
