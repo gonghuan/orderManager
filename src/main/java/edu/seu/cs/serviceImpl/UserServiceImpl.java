@@ -19,4 +19,10 @@ public class UserServiceImpl implements UserService {
 		return userMapper.selectByName(userName);
 	}
 
+	@Override
+	public User login(String shortName) {
+		// TODO Auto-generated method stub
+		return userMapper.selectByName(shortName);
+	}
+
 }

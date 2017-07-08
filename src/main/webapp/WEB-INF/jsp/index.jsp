@@ -9,10 +9,12 @@
 </head>
 <body>
 	<%User user = (User)session.getAttribute("user"); %>
-	<form action="getUserByName" method="post">
+	<!-- <form action="getUserByName" method="post">
 		<input type="text" name="userName">
 		<button type="submit">查询</button>
-	</form>
+	</form> -->
+	
+	${user.getShortName()}
 	
 	<!-- <form action="getBankName" method="post">
 		<input type="text" name="bankCode">

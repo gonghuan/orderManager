@@ -10,6 +10,6 @@
 	</resultMap>
 	<select id="selectByName" resultMap="BaseResultMap" parameterType="String">
 		select clientid, clientkind, case when isdouble = 'F' then 0 else 1 end as isdouble, code, shortname
-		from client where shortname = #{userName}
+		from client where shortname = #{name}
 	</select>
 </mapper>

@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.seu.cs.model.User;
@@ -21,5 +23,12 @@ public class UserController {
 		User user = userService.selectByName(userName);
 		request.getSession().setAttribute("user", user);
 		return user;
+	}
+	
+	@RequestMapping(value="login", method=RequestMethod.POST)
+	public String login(@RequestParam String shortName, HttpServletRequest request){
+		User user = userService.login(shortName);
+		request.getSession().setAttribute("user", user);
+		return "/index";
 	}
 }
