@@ -1,7 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.seu.cs.mapper.GoodsMapper">
+	<resultMap id="BaseResultMap" type="edu.seu.cs.dto.GoodsInfoDto">
+		<result column="code" property="code"></result>
+		<result column="name" property="name"></result>
+		<result column="unit" property="unit"></result>
+		<result column="spec" property="spec"></result>
+		<result column="onhand" property="onHand"></result>
+	</resultMap>
+	
 	<select id="testSelect" parameterType="String" resultType="String">
 		select name from shop where code=#{bankCode}
 	</select>
+	
+	<select id="selectAllGoodsName" resultMap="String">
+		select distinct name from goods;
+	</select>
+	
+	<select id="getDetailGoodsInfoByName">
+		select goods.goodsid, goods.code, goods.name, goods.unitname, goods.spec, sum(detail.inqty - detail.outqty) as onhand 
+		from goods 
+		left join detailbillflow detail on goods.goodsid = detail.goodsid
+		where goods.name = #{name}
+	</select>
+	
 </mapper>

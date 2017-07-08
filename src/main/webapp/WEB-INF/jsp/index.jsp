@@ -15,6 +15,7 @@
 	</form> -->
 	
 	${user.getShortName()}
+	<img alt="" src="img/01.jpg">
 	
 	<!-- <form action="getBankName" method="post">
 		<input type="text" name="bankCode">

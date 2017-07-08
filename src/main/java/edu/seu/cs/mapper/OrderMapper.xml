@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.seu.cs.mapper.OrderMapper">
+	<insert id="insertSOrder" parameterType="edu.seu.cs.model.SOrder">
+		insert into sorder
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			sorderid,
+			
+			code,
+			
+			billdate,
+			
+			clientid,
+			
+			<if test="billTypeId != null">
+				billtypeid,
+			</if>
+			<if test="taxRate != null">
+				taxrate,
+			</if>
+			<if test="disc != null">
+				disc,
+			</if>
+			<if test="exemanId != null">
+				exemanid,
+			</if>
+			<if test="amount != null">
+				amount,
+			</if>
+			<if test="shopId != null">
+				shopid,
+			</if>
+			<if test="shipTo != null">
+				shipto,
+			</if>
+			<if test="takeDate != null">
+				takedate
+			</if>
+			<if test="opId != null">
+				opid,
+			</if>
+			<if test="closed != null">
+				closed,
+			</if>
+			<if test="finished != null">
+				finished,
+			</if>
+			<if test="rptId != null">
+				rptid,
+			</if>
+			<if test="templateId != null">
+				templateid,
+			</if>
+			<if test="referCount != null">
+				refercount,
+			</if>
+			<if	test = "phone != null">
+				phone,
+			</if>
+			<if test = "contator != null">
+				contator,
+			</if>
+			<if test = "sendEmail != null">
+				sendemail,
+			</if>
+			<if test = "printCount != null">
+				printcount,
+			</if>
+			<if test = "dsOrder != null">
+				dsorder,
+			</if>
+			<if test = "uploaded != null">
+				uploaded,
+			</if>
+			<if test = "billStatus != null">
+				billstatus,
+			</if>
+			<if test="ackAppr != null">
+				ackappr,
+			</if>
+			<if test="fileCount != null">
+				filecount
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			(select max(sorderid)+1 as sorderid from sorder),
+			
+			(select 'XD-001-'||date||(select count(*)+1 from sorder where code like '%date%') as code)
+			 from (select convert(varchar(10), getdate(), 120) as date) 
+			
+			(select getdate() as billdate),
+			(select clientid from client where shortname = #{shortName})
+			<if test="billTypeId != null">
+				#{billtypeId},
+			</if>
+			<if test="taxRate != null">
+				#{taxRate},
+			</if>
+			<if test="disc != null">
+				#{disc},
+			</if>
+			<if test="exemanId != null">
+				#{exemanId},
+			</if>
+			<if test="amount != null">
+				#{amount},
+			</if>
+			<if test="shopId != null">
+				#{shopId},
+			</if>
+			<if test="shipTo != null">
+				#{shipTo},
+			</if>
+			<if test="takeDate != null">
+				#{takeDate},
+			</if>
+			<if test="opId != null">
+				#{opId},
+			</if>
+			<if test="closed != null">
+				#{closed},
+			</if>
+			<if test="finished != null">
+				#{finished},
+			</if>
+			<if test="rptId != null">
+				#{rptId},
+			</if>
+			<if test="templateId != null">
+				#{templateId},
+			</if>
+			<if test="referCount != null">
+				#{referCount},
+			</if>
+			<if	test = "phone != null">
+				#{phone},
+			</if>
+			<if test = "contator != null">
+				#{contator},
+			</if>
+			<if test = "sendEmail != null">
+				#{sendEmail},
+			</if>
+			<if test = "printCount != null">
+				#{printCount},
+			</if>
+			<if test = "dsOrder != null">
+				#{dsOrder},
+			</if>
+			<if test = "uploaded != null">
+				#{uploaded},
+			</if>
+			<if test = "billStatus != null">
+				#{billStatus},
+			</if>
+			<if test="ackAppr != null">
+				#{ackAppr},
+			</if>
+			<if test="fileCount != null">
+				#{fileCount}
+			</if>
+		</trim>
+	</insert>
+	
+	<insert id="insertSOrderDetail" parameterType="edu.seu.cs.model.SOrderDetail">
+		insert into sorderdetail
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			sorderid,
+			itemno,
+			unitid,
+			goodid,
+			<if test="price != null">
+				price,
+			</if>
+			<if test="quantity != null">
+				quantity,
+			</if>
+			<if test="unitPrice != null">
+				unitprice,
+			</if>
+			<if test="unitQty != null">
+				unitqty,
+			</if>
+			<if test="taxRate != null">
+				taxrate,
+			</if>
+			<if test="amount != null">
+				amount,
+			</if>
+			<if test="taxAmt">
+				taxamt,
+			</if>
+			<if test="goodsSamt">
+				goodssamt,
+			</if>
+			<if test="disc">
+				disc,
+			</if>
+			<if test="takeQty">
+				taleqty,
+			</if>
+			<if test="mnqty">
+				mnqty,
+			</if>
+			<if test="memo">
+				memo,
+			</if>
+			<if test="referCount">
+				refercount,
+			</if>
+			<if test="nprice">
+				nprice,
+			</if>
+			<if test="mrpsel">
+				mrpsel,
+			</if>
+			<if test="isPresent">
+				ispresent,
+			</if>
+			<if test="priceType">
+				pricetype
+			</if>
+			<trim prefix="values(" suffix=")" suffixOverrides=",">
+				(select max(sorderid) as sorderid from sorder),
+				(select max(itemno)+1 as itemno form sorderdetail where sorderid=(select max(sorderid) as sorderid from sorder)),
+				(select unitid from goodsunit where goodsid=#{goodsid}),
+				#{goodsid},
+				<if test="price != null">
+					#{price},
+				</if>
+				<if test="quantity != null">
+					#{quantity},
+				</if>
+				<if test="unitPrice != null">
+					#{unitPrice},
+				</if>
+				<if test="unitQty != null">
+					#{unitQty},
+				</if>
+				<if test="taxRate != null">
+					#{taxRate},
+				</if>
+				<if test="amount != null">
+					#{amount},
+				</if>
+				<if test="taxAmt">
+					#{taxAmt},
+				</if>
+				<if test="goodsSamt">
+					#{goodsSamt},
+				</if>
+				<if test="disc">
+					#{disc},
+				</if>
+				<if test="takeQty">
+					#{taleQty},
+				</if>
+				<if test="mnqty">
+					#{mnqty},
+				</if>
+				<if test="memo">
+					#{memo},
+				</if>
+				<if test="referCount">
+					#{referCount},
+				</if>
+				<if test="nprice">
+					#{nprice},
+				</if>
+				<if test="mrpsel">
+					#{mrpsel},
+				</if>
+				<if test="isPresent">
+					#{isPresent},
+				</if>
+				<if test="priceType">
+					#{priceType}
+				</if>
+			</trim>
+		</trim>
+	</insert>
+</mapper>

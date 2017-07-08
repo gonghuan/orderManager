@@ -7,6 +7,19 @@ public class SOrder {
 	private String code;
 	private Date billDate;
 	private int clientId;
+	private String shortName;
+	public int getsOrderId() {
+		return sOrderId;
+	}
+	public void setsOrderId(int sOrderId) {
+		this.sOrderId = sOrderId;
+	}
+	public String getShortName() {
+		return shortName;
+	}
+	public void setShortName(String shortName) {
+		this.shortName = shortName;
+	}
 	private int billTypeId;
 	private double tarRate;
 	private double disc;
