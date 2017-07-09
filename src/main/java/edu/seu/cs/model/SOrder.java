@@ -36,6 +36,7 @@ public class SOrder {
 	private int referCount;
 	private int printed;
 	private int exemanid;
+	
 	public int getExemanid() {
 		return exemanid;
 	}

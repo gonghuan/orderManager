@@ -14,7 +14,9 @@
 			billdate,
 			
 			clientid,
-						
+			<if test="billTypeId != null">
+				billtypeid,
+			</if>
 			<if test="taxRate != null">
 				taxrate,
 			</if>
@@ -91,7 +93,9 @@
 			
 			(select getdate() as billdate),
 			#{clientId},
-			
+			<if test="billTypeId != null">
+				#{billTypeId},
+			</if>
 			<if test="taxRate != null">
 				#{taxRate},
 			</if>
@@ -116,11 +120,17 @@
 			<if test="opId != null">
 				#{opId},
 			</if>
-			<if test="closed != null">
-				#{closed},
+			<if test="closed != null and closed == 0">
+				'F',
 			</if>
-			<if test="finished != null">
-				#{finished},
+			<if test="closed != null and closed == 1">
+				'T',
+			</if>
+			<if test="finished != null and finished == 0">
+				'F',
+			</if>
+			<if test="finished != null and finished == 1">
+				'T',
 			</if>
 			<if test="rptId != null">
 				#{rptId},
@@ -137,23 +147,35 @@
 			<if test = "contator != null">
 				#{contator},
 			</if>
-			<if test = "sendEmail != null">
-				#{sendEmail},
+			<if test = "sendEmail != null and sendEmail == 0">
+				'F',
+			</if>
+			<if test = "sendEmail != null and sendEmail == 1">
+				'T',
 			</if>
 			<if test = "printCount != null">
 				#{printCount},
 			</if>
-			<if test = "dsOrder != null">
-				#{dsOrder},
+			<if test = "dsOrder != null and dsOrder == 0">
+				'F',
 			</if>
-			<if test = "uploaded != null">
-				#{uploaded},
+			<if test = "dsOrder != null and dsOrder == 1">
+				'T',
+			</if>
+			<if test = "uploaded != null and dsOrder == 0">
+				'F',
+			</if>
+			<if test = "uploaded != null and dsOrder == 1">
+				'T',
 			</if>
 			<if test = "billStatus != null">
 				#{billStatus},
 			</if>
-			<if test="ackAppr != null">
-				#{ackAppr},
+			<if test="ackAppr != null and ackAppr == 0">
+				'F',
+			</if>
+			<if test="ackAppr != null and ackAppr == 1">
+				'T',
 			</if>
 			<if test="fileCount != null">
 				#{fileCount}

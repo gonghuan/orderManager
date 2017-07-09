@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import edu.seu.cs.model.User;
 
 public class LoginFilter implements Filter{
-
+	FilterConfig config;
 	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub
@@ -30,21 +30,34 @@ public class LoginFilter implements Filter{
 		FilterChain chain = arg2;
 		String context = request.getContextPath();
 		String url = request.getRequestURI();
-		if(url.equals(context+"/login")){
-			chain.doFilter(request, response);
-		}else{
-			if(request.getSession().getAttribute("user") == null){
-				response.sendRedirect(context + "/login");
-			}else{
-				chain.doFilter(request, response);
+		String[] patterns = config.getInitParameter("passPattern").split(";");
+		boolean isStaticResource = false;
+		for(String pattern : patterns){
+			if(url.indexOf(pattern) >= 0){
+				isStaticResource = true;
+				break;
 			}
 		}
+		if(isStaticResource){
+			chain.doFilter(request, response);
+		}else{
+			if(url.equals(context+"/login")){
+				chain.doFilter(request, response);
+			}else{
+				if(request.getSession().getAttribute("user") == null){
+					response.sendRedirect(context + "/login");
+				}else{
+					chain.doFilter(request, response);
+				}
+			}
+		}
+		
 	}
 
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
 		// TODO Auto-generated method stub
-		
+		config = arg0;
 	}
 
 }

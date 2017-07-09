@@ -98,7 +98,9 @@ public class OrderController {
 		sOrder.setAckAppr(false);
 		sOrder.setFileCount(0);
 		sOrder.setExemanId(1);
-		
+		sOrder.setBillTypeId(1);
+		sOrder.setTemplateId(1);
+		sOrder.setRptId(5);
 		int i = 0;
 		String[] list = strs.split("\\$");
 		while(i < list.length){
