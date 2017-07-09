@@ -83,7 +83,7 @@
 			(select max(sorderid)+1 as sorderid from sorder),
 			
 			((select 'XD-001-'+(select convert(varchar(10), getdate(), 120) as date)
-			+cast((select count(*)+1 from sorder where code like '%(select convert(varchar(10), getdate(), 120) as date)%') as varchar(4))as code)
+			+'-'+cast((select count(*)+1 from sorder where code like '%(select convert(varchar(10), getdate(), 120) as date)%') as char(4))as code)
 			 ), 
 			
 			(select getdate() as billdate),
