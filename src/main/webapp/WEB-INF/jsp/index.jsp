@@ -83,6 +83,7 @@
 	                                	<select style="font-size:18px;height:36px;width:200px;textalign:center" class="selectGoodsName">
 	                                	<option value="" selected="selected">请选择货品类型</option>
 	                                	</select>
+	                                	<input class="goodsid" type="hidden">
 	                                </div>
 	                            </div>
 	                            <div class="form-group col-md-2 onHandDiv">
@@ -154,6 +155,7 @@
 			success: function(data){
 				select.parents('.panel-body').find('.onhand').val(data.onHand);
 				select.parents('.panel-body').find('.price').val(1);
+				select.parents('.panel-body').find('.goodsid').val(data.goodsId);
 				/* $('#specInput').val(data.spec);
 				$('#unitInput').val(data.unit);
 				$('#goodsIdInput').val(data.goodsId);
@@ -173,14 +175,48 @@
 	});
 	
 	$('#uploadInfoBtn').click(function(){
-		
+		var clientId = $('#clientId').val();
+		var shortName = $('#clientid').val();
+		var contector = $('#contector').val();
+		var phone = $('#phone').val();
+		var shipto = $('#shipto').val();
+		var dataArray = new Array();
+		var panels = $('#goodPanel .panel-body');
+		for(var i = 0; i < panels.length; i++){
+			var panel = $(panels[i]);
+			var goodsName = panel.find('select option:selected').text();
+			var onhand = panel.find('.onhand').val();
+			var price = panel.find('.price').val();
+			var quantity = panel.find('.quantity').val();
+			var amount = panel.find('.amount').val();
+			var goodsId = panel.find('.goodsid').val();
+			if(quantity == null || quantity == '') quantity = 0;
+			if(amount == null || quantity == '') amount = 0;
+			var data = '{"goodsName":'+ goodsName + ', "onhand":'+ onhand+', "price":'+price+', "quantity":'+
+				quantity+', "amount":'+amount+',"goodsId":'+goodsId+'}';
+			//var data = eval('('+tmp+')');
+			dataArray[i]=data;
+		}
+		$.ajax({
+			url: 'insertOrderAndDetail',
+			type: 'post',
+			dataType: 'json', 
+			data: {'clientId' : clientId, 'shortName':shortName, 'contector': contector, 'phone':phone, 'shipto':shipto,
+				'strs': dataArray.join('$')},
+			success: function(data){
+				alert('操作成功');
+			},
+			error: function(data, status, e){
+				alert('操作失败');
+			}	
+		});
 	});
 	
 	$('#btn_addDiv').click(function(){
 		var goodItem = document.createElement("div");
 		goodItem.setAttribute("class", "panel-body row"); 
 		
-		goodItem.innerHTML="<div class=\"form-group col-md-4\"><label for=\"goodsName\" class=\"col-sm-3 control-label\">货品名称</label><div class=\"col-sm-9\"><select style=\"font-size:18px;height:36px;width:200px;textalign:center\"  class=\"selectGoodsName\"><option value=\" selected=\"selected\">请选择货品类型</option></select></div></div><div class=\"form-group col-md-2 onhandDiv\"><label for=\"onhand\" class=\"col-sm-5 control-label\">库存</label><div class=\"col-sm-7\"><input type=\"text\" class=\"form-control onhand\" readonly=\"readonly\"></div></div><div class=\"form-group col-md-2 priceDiv\"><label for=\"price\" class=\"col-sm-5 control-label\">单价</label><div class=\"col-sm-7\"><input type=\"text\" class=\"form-control price\" readonly=\"readonly\"></div></div><div class=\"form-group col-md-2 quantityDiv\"><label for=\"quantity\" class=\"col-sm-5 control-label\">数量</label><div class=\"col-sm-7\"><input type=\"text\" class=\"form-control quantity\"></div></div><div class=\"form-group col-md-2 amountDiv\"><label for=\"amount\" class=\"col-sm-5 control-label\">金额</label><div class=\"col-sm-7\"><input type=\"text\" class=\"form-control amount\" readonly=\"readonly\"></div></div>";
+		goodItem.innerHTML="<div class=\"form-group col-md-4\"><label for=\"goodsName\" class=\"col-sm-3 control-label\">货品名称</label><div class=\"col-sm-9\"><select style=\"font-size:18px;height:36px;width:200px;textalign:center\"  class=\"selectGoodsName\"><option value=\" selected=\"selected\">请选择货品类型</option></select><input class=\"goodsid\" type=\"hidden\"></div></div><div class=\"form-group col-md-2 onhandDiv\"><label for=\"onhand\" class=\"col-sm-5 control-label\">库存</label><div class=\"col-sm-7\"><input type=\"text\" class=\"form-control onhand\" readonly=\"readonly\"></div></div><div class=\"form-group col-md-2 priceDiv\"><label for=\"price\" class=\"col-sm-5 control-label\">单价</label><div class=\"col-sm-7\"><input type=\"text\" class=\"form-control price\" readonly=\"readonly\"></div></div><div class=\"form-group col-md-2 quantityDiv\"><label for=\"quantity\" class=\"col-sm-5 control-label\">数量</label><div class=\"col-sm-7\"><input type=\"text\" class=\"form-control quantity\"></div></div><div class=\"form-group col-md-2 amountDiv\"><label for=\"amount\" class=\"col-sm-5 control-label\">金额</label><div class=\"col-sm-7\"><input type=\"text\" class=\"form-control amount\" readonly=\"readonly\"></div></div>";
 		
 		var gPanel = document.getElementById("goodPanel");
 		gPanel.appendChild(goodItem);
@@ -199,6 +235,7 @@
 				success: function(data){
 					select.parents('.panel-body').find('.onhand').val(data.onHand);
 					select.parents('.panel-body').find('.price').val(1);
+					select.parents('.panel-body').find('.goodsid').val(data.goodsId);
 					/* $('#specInput').val(data.spec);
 					$('#unitInput').val(data.unit);
 					$('#goodsIdInput').val(data.goodsId);
@@ -216,6 +253,42 @@
 			var price = parent.find('.price').val();
 			parent.find('.amount').val(quantity*price);
 		});
+		
+		/* $('#uploadInfoBtn').click(function(){
+			var clientId = $('#clientId').val();
+			var shortName = $('#clientid').val();
+			var contector = $('#contector').val();
+			var phone = $('#phone').val();
+			var shipto = $('#shipto').val();
+			var dataArray = new Array();
+			var panels = $('#goodPanel .panel-body');
+			for(var i = 0; i < panels.length; i++){
+				var panel = $(panels[i]);
+				var goodsName = panel.find('select option:selected').text();
+				var onhand = panel.find('.onhand').val();
+				var price = panel.find('price').val();
+				var quantity = panel.find('.quantity').val();
+				var amount = panel.find('.amount').val();
+				var goodsId = panel.find('.goodsid').val();
+				var data = "{'goodsName':"+ goodsName + ", 'onhand':"+ onhand+", 'price':"+price+", 'quantity':"+
+					quantity+", 'amount':"+amount+",'goodsId':"+goodsId+"}";
+				//var data = eval('('+tmp+')');
+				dataArray[i]=data;
+			}
+			$.ajax({
+				url: 'insertOrderAndDetail',
+				type: 'post',
+				dataType: 'json', 
+				data: {'clientId' : clientId, 'shortName':shortName, 'contector': contector, 'phone':phone, 'shipto':shipto,
+					'list': dataArray.join('#')},
+				success: function(data){
+					alert('操作成功');
+				},
+				error: function(data, status, e){
+					alert('操作失败');
+				}	
+			});
+		}); */
 	});
 
 

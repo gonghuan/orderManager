@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.seu.cs.mapper.OrderMapper">
+	<select id="selectMaxSorderId" resultType="String">
+		select max(sorderid)+1 as sorderid from sorder
+	</select>
 	<insert id="insertSOrder" parameterType="edu.seu.cs.model.SOrder">
 		insert into sorder
 		<trim prefix="(" suffix=")" suffixOverrides=",">
@@ -83,11 +86,11 @@
 			(select max(sorderid)+1 as sorderid from sorder),
 			
 			((select 'XD-001-'+(select convert(varchar(10), getdate(), 120) as date)
-			+'-'+cast((select count(*)+1 from sorder where code like '%(select convert(varchar(10), getdate(), 120) as date)%') as char(4))as code)
+			+'-'+cast((select right(10000+count(*)+1, 4) from sorder where code like '%'+(select convert(varchar(10), getdate(), 120) as date)+'%') as varchar(4))as code)
 			 ), 
 			
 			(select getdate() as billdate),
-			(select clientid from client where shortname = #{shortName}),
+			#{clientId},
 			
 			<if test="taxRate != null">
 				#{taxRate},
