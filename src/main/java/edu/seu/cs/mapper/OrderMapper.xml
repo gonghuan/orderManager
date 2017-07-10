@@ -290,10 +290,10 @@
 					#{nprice},
 				</if>
 				<if test="mrpsel != null">
-					#{mrpsel},
+					'F',
 				</if>
 				<if test="isPresent != null">
-					#{isPresent},
+					'F',
 				</if>
 				<if test="priceType != null">
 					#{priceType}

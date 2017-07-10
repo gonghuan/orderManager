@@ -41,7 +41,7 @@
 		<input id="filecountInput"> -->
 		<button id="button">提交</button>
 <script>
-	$(function(){
+	/* $(function(){
 		$.ajax({
 			url: 'getAllGoodsName',
 			success: function(data){
@@ -96,7 +96,7 @@
 				}
 			});
 		});
-	});
+	}); */
 </script>
 </body>
 </html>

@@ -77,6 +77,40 @@ public class OrderController {
 			@RequestParam String phone, @RequestParam String shipto, @RequestParam int clientId, @RequestParam String strs){
 		SOrder sOrder = new SOrder();
 		List<SOrderDetail> array = new ArrayList<>();
+		
+		int i = 0;
+		double amount=0.0;
+		String[] list = strs.split("\\$");
+		while(i < list.length){
+			String str = list[i];
+			str = str.substring(1, str.length() - 1);
+			String[] attrs = str.split(",");
+			//JSONObject json = JSONObject.parseObject(str);
+			SOrderDetail sOrderDetail = new SOrderDetail();
+			sOrderDetail.setGoodsId(Integer.parseInt(attrs[5].split(":")[1].trim()));
+			sOrderDetail.setPrice(Double.parseDouble(attrs[2].split(":")[1].trim()));
+			sOrderDetail.setQuantity(Double.parseDouble(attrs[3].split(":")[1].trim()));
+			sOrderDetail.setUnitPrice(Double.parseDouble(attrs[2].split(":")[1].trim()));
+			sOrderDetail.setUnitQty(Double.parseDouble(attrs[3].split(":")[1].trim()));
+			sOrderDetail.setTaxRate(0);
+			sOrderDetail.setAmount(Double.parseDouble(attrs[4].split(":")[1].trim()));
+			amount+=Double.parseDouble(attrs[4].split(":")[1].trim());
+			sOrderDetail.setTaxAmt(0);
+			//sOrderDetail.setGoodsSamt(0);
+			sOrderDetail.setGoodsSamt(Double.parseDouble(attrs[4].split(":")[1].trim()));
+			sOrderDetail.setDisc(100);
+			//sOrderDetail.setTakeQty(Double.parseDouble(attrs[3].split(":")[1].trim()));
+			sOrderDetail.setTakeQty(0);
+			sOrderDetail.setMnqty(0);
+			sOrderDetail.setMnqty(0);
+			sOrderDetail.setReferCount(0);
+			sOrderDetail.setNprice(10);
+			sOrderDetail.setMrpsel(false);
+			sOrderDetail.setPresent(false);
+			array.add(sOrderDetail);
+			i++;
+		}
+		
 		sOrder.setContator(contector);
 		sOrder.setPhone(phone);
 		sOrder.setTakeDate(new Date());
@@ -84,7 +118,7 @@ public class OrderController {
 		sOrder.setClientId(clientId);
 		sOrder.setTaxRate(0);
 		sOrder.setDisc(100);
-		sOrder.setAmount(0);
+		sOrder.setAmount(amount);
 		sOrder.setShopId(0);
 		sOrder.setOpId(1);
 		sOrder.setClosed(false);
@@ -101,33 +135,6 @@ public class OrderController {
 		sOrder.setBillTypeId(1);
 		sOrder.setTemplateId(1);
 		sOrder.setRptId(5);
-		int i = 0;
-		String[] list = strs.split("\\$");
-		while(i < list.length){
-			String str = list[i];
-			str = str.substring(1, str.length() - 1);
-			String[] attrs = str.split(",");
-			//JSONObject json = JSONObject.parseObject(str);
-			SOrderDetail sOrderDetail = new SOrderDetail();
-			sOrderDetail.setGoodsId(Integer.parseInt(attrs[5].split(":")[1].trim()));
-			sOrderDetail.setPrice(Double.parseDouble(attrs[2].split(":")[1].trim()));
-			sOrderDetail.setQuantity(Double.parseDouble(attrs[3].split(":")[1].trim()));
-			sOrderDetail.setUnitPrice(Double.parseDouble(attrs[2].split(":")[1].trim()));
-			sOrderDetail.setUnitQty(Double.parseDouble(attrs[3].split(":")[1].trim()));
-			sOrderDetail.setTaxRate(0);
-			sOrderDetail.setAmount(Double.parseDouble(attrs[4].split(":")[1].trim()));
-			sOrderDetail.setTaxAmt(0);
-			sOrderDetail.setGoodsSamt(0);
-			sOrderDetail.setDisc(100);
-			sOrderDetail.setTakeQty(Double.parseDouble(attrs[3].split(":")[1].trim()));
-			sOrderDetail.setMnqty(0);
-			sOrderDetail.setReferCount(0);
-			sOrderDetail.setNprice(10);
-			sOrderDetail.setMrpsel(false);
-			sOrderDetail.setPresent(false);
-			array.add(sOrderDetail);
-			i++;
-		}
 		
 		orderService.inserSOrderAndDetail(sOrder, array);
 		return true;

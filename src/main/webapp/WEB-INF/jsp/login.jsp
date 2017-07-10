@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" errorPage="error.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +11,7 @@
 	<link href="css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
       body {
-        padding-top: 60px;
+        padding-top: 50px;
         padding-bottom: 40px;
         background:#FFFFFF;
       }
@@ -79,18 +80,18 @@
 				<div class="col-md-2"></div>
 			</div>
 			
-			<div class="row" style="padding:30px;height:45px;margin-bottom:10px;">
+			<div class="row" style="padding:20px;height:45px;margin-bottom:10px;">
 				<form action="login" method="post">
 					<div class="col-md-2"></div>
 					<div class="col-md-3" style="height:45px;">
-						<input type="text"  placeholder="请输入用户名" name="shortName" style="width:100%;height:45px; font-size:20px;">
+						<input type="text"  placeholder="请输入用户名" name="shortName" style="width:100%;height:42px; font-size:18px;text-align:center">
 					</div>
 			        
 			        <div class="col-md-2"></div>
 			        <!--input type="password" class="input-block-level" placeholder="Password"-->
 			        
 			        <div class="col-md-3">
-						<button class="btn btn-large btn-primary col-md-2" type="submit" style="width:100%;height:45px; font-size:20px;">登录</button>
+						<button class="btn btn-large btn-primary col-md-2" type="submit" style="width:100%;height:42px; font-size:18px;">登录</button>
 					</div>
 			        
 			    </form>

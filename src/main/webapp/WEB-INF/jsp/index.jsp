@@ -35,13 +35,13 @@
 </div>
 <div class="container-fluid" style="padding:20px;">
     <div class="row">
-        <div class="col-md-10 col-md-offset-1 main">
+        <div class="main">
             <!--录入订单-->
             <div class="container" style="width: 100%;">
             <h1>订单详情</h1>
             <!-- sorder表信息 -->
-                <form id="sorder" class="form-horizontalm" role="form" onsubmit="">
-                    <div class="panel panel-default">
+                <form id="sorder" class="form-horizontalm" role="form" style="padding-top:20px;">
+                    <div class=" col-md-10 col-md-offset-1" style="margin-bottom:20px;">
                     
                         <div class="row panel-body">
                         	<div id="clientidDiv" class="form-group col-md-6">
@@ -80,7 +80,7 @@
 	                        	<div id="goodsNameDiv" class="form-group col-md-4">
 	                                <label for="goodsName" class="col-sm-3 control-label">货品名称</label>
 	                                <div class="col-sm-9">
-	                                	<select style="font-size:18px;height:36px;width:200px;textalign:center" class="selectGoodsName">
+	                                	<select style="font-size:16px;height:36px;width:200px;textalign:center" class="selectGoodsName">
 	                                	<option value="" selected="selected">请选择货品类型</option>
 	                                	</select>
 	                                	<input class="goodsid" type="hidden">
@@ -115,8 +115,8 @@
                      	</div>
                      	<!-- 重复结束 -->
                      	
-                     	<div>
-                     	<button id="btn_addDiv" type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                     	<div style="text-align:center">
+                     	<button id="btn_addDiv" type="button" style="border:none;background:none;"><span class="glyphicon glyphicon-plus" style="color: #5b5b5b; font-size: 28px;" aria-hidden="true"></span></button>
                      	</div>
                     </div>
                     <div class="form-group col-md-offset-4 col-md-4" id="submitBtn">
@@ -129,7 +129,7 @@
 </div>
                 
 <script type="text/javascript">
-	$(function(){
+	 $(function(){
 		$.ajax({
 			url: 'getAllGoodsName',
 			success: function(data){
@@ -154,12 +154,8 @@
 			type: 'post',
 			success: function(data){
 				select.parents('.panel-body').find('.onhand').val(data.onHand);
-				select.parents('.panel-body').find('.price').val(1);
+				select.parents('.panel-body').find('.price').val(15);
 				select.parents('.panel-body').find('.goodsid').val(data.goodsId);
-				/* $('#specInput').val(data.spec);
-				$('#unitInput').val(data.unit);
-				$('#goodsIdInput').val(data.goodsId);
-				$('#onhandInput').val(data.onHand); */
 			},
 			error: function(data, status, e){
 				alert('发生未知错误');
@@ -211,12 +207,12 @@
 			}	
 		});
 	});
-	
+	 
 	$('#btn_addDiv').click(function(){
 		var goodItem = document.createElement("div");
 		goodItem.setAttribute("class", "panel-body row"); 
 		
-		goodItem.innerHTML="<div class=\"form-group col-md-4\"><label for=\"goodsName\" class=\"col-sm-3 control-label\">货品名称</label><div class=\"col-sm-9\"><select style=\"font-size:18px;height:36px;width:200px;textalign:center\"  class=\"selectGoodsName\"><option value=\" selected=\"selected\">请选择货品类型</option></select><input class=\"goodsid\" type=\"hidden\"></div></div><div class=\"form-group col-md-2 onhandDiv\"><label for=\"onhand\" class=\"col-sm-5 control-label\">库存</label><div class=\"col-sm-7\"><input type=\"text\" class=\"form-control onhand\" readonly=\"readonly\"></div></div><div class=\"form-group col-md-2 priceDiv\"><label for=\"price\" class=\"col-sm-5 control-label\">单价</label><div class=\"col-sm-7\"><input type=\"text\" class=\"form-control price\" readonly=\"readonly\"></div></div><div class=\"form-group col-md-2 quantityDiv\"><label for=\"quantity\" class=\"col-sm-5 control-label\">数量</label><div class=\"col-sm-7\"><input type=\"text\" class=\"form-control quantity\"></div></div><div class=\"form-group col-md-2 amountDiv\"><label for=\"amount\" class=\"col-sm-5 control-label\">金额</label><div class=\"col-sm-7\"><input type=\"text\" class=\"form-control amount\" readonly=\"readonly\"></div></div>";
+		goodItem.innerHTML="<div class=\"form-group col-md-4\"><label for=\"goodsName\" class=\"col-sm-3 control-label\">货品名称</label><div class=\"col-sm-9\"><select style=\"font-size:16px;height:36px;width:200px;textalign:center\"  class=\"selectGoodsName\"><option value=\" selected=\"selected\">请选择货品类型</option></select><input class=\"goodsid\" type=\"hidden\"></div></div><div class=\"form-group col-md-2 onhandDiv\"><label for=\"onhand\" class=\"col-sm-5 control-label\">库存</label><div class=\"col-sm-7\"><input type=\"text\" class=\"form-control onhand\" readonly=\"readonly\"></div></div><div class=\"form-group col-md-2 priceDiv\"><label for=\"price\" class=\"col-sm-5 control-label\">单价</label><div class=\"col-sm-7\"><input type=\"text\" class=\"form-control price\" readonly=\"readonly\"></div></div><div class=\"form-group col-md-2 quantityDiv\"><label for=\"quantity\" class=\"col-sm-5 control-label\">数量</label><div class=\"col-sm-7\"><input type=\"text\" class=\"form-control quantity\"></div></div><div class=\"form-group col-md-2 amountDiv\"><label for=\"amount\" class=\"col-sm-5 control-label\">金额</label><div class=\"col-sm-7\"><input type=\"text\" class=\"form-control amount\" readonly=\"readonly\"></div></div>";
 		
 		var gPanel = document.getElementById("goodPanel");
 		gPanel.appendChild(goodItem);
@@ -254,7 +250,7 @@
 			parent.find('.amount').val(quantity*price);
 		});
 		
-		/* $('#uploadInfoBtn').click(function(){
+		 /*$('#uploadInfoBtn').click(function(){
 			var clientId = $('#clientId').val();
 			var shortName = $('#clientid').val();
 			var contector = $('#contector').val();
