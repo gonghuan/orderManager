@@ -171,6 +171,7 @@
 	});
 	
 	$('#uploadInfoBtn').click(function(){
+		$('#uploadInfoBtn').attr('disabled', 'disabled');
 		var clientId = $('#clientId').val();
 		var shortName = $('#clientid').val();
 		var contector = $('#contector').val();
@@ -201,9 +202,12 @@
 				'strs': dataArray.join('$')},
 			success: function(data){
 				alert('操作成功');
+				$('#uploadInfoBtn').removeAttr('disabled');
+				window.location.reload(); 
 			},
 			error: function(data, status, e){
 				alert('操作失败');
+				$('#uploadInfoBtn').removeAttr('disabled');
 			}	
 		});
 	});
