@@ -31,8 +31,6 @@
        height:300px;
       }
       
-      .loginForm{
-      }
       
     </style>
     <script src="js/jquery-3.1.1.min.js"></script>
@@ -41,7 +39,8 @@
 <body>
 	<div class="navbar navbar-inverse navbar-fixed-top"></div>
 	<div class="container">
-			<div id="carouselslide" class="carousel slide" data-ride="carousel">
+			<div id="carouselslide" class="carousel slide hidden-xs" data-ride="carousel">
+			
   			<!-- Indicators -->
   			<ol class="carousel-indicators">
     			<li data-target="#carouselslide" data-slide-to="0" class="active"></li>
@@ -52,14 +51,14 @@
 		  <!-- Wrapper for slides -->
 		  <div class="carousel-inner" role="listbox">
 		    <div class="loginImg item active">
-		    	<img alt="图片" src="img/a.jpg" width="100%" height="100%"/>
+		    	<img alt="图片" src="img/a.jpg" width="100%" height="100%" />
 		    </div>
-		    <div class="loginImg item">
-		      <img alt="图片" src="img/a.jpg" width="100%" height="100%"/>
+		    <div class="loginImg item" >
+		      <img alt="图片" src="img/a.jpg" width="100%" height="100%" />
 		    </div>
-		    <div class="loginImg item">
-		      <img alt="图片" src="img/a.jpg" width="100%" height="100%"/>
-		    </div>
+		    <div class="loginImg item" >
+		      <img alt="图片" src="img/a.jpg" width="100%" height="100%" />
+		    </div> 
 		  </div>
 		  <!-- Controls -->
 		  <a class="left carousel-control" href="#carouselslide" role="button" data-slide="prev">
@@ -71,11 +70,15 @@
 		</div>
 		
 		<div class="loginDiv container-fluid">
+			
+			<div class="carousel slide visible-xs-* hidden-sm hidden-md hidden-lg" >
+				<img alt="图片" src="img/a.jpg" width="100%" height="100%">
+			</div>
 			<div class="row" style="height:100px;margin:20px;">
 				<div class="col-md-2"></div>
 				<div class="col-md-8" style="height:100px">
-					<!--  h1 style="color:#0064cc"--><!-- 千发配货系统--><!--/h1>--> 
-					<img alt="千发配货系统" src="img/title.png">
+					<h1 class="visible-xs-* hidden-sm hidden-md hidden-lg" style="color:#0064cc">千发配货系统</h1>
+					<img class="hidden-xs" alt="千发配货系统" src="img/title.png">
 				</div>
 				<div class="col-md-2"></div>
 			</div>
