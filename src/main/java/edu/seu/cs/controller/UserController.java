@@ -28,6 +28,7 @@ public class UserController {
 	
 	@RequestMapping(value="login", method=RequestMethod.POST)
 	public String login(@RequestParam String shortName, HttpServletRequest request, Model model){
+		shortName = shortName.trim().toUpperCase();
 		User user = userService.login(shortName);
 		if(user != null){
 			request.getSession().setAttribute("user", user);
