@@ -52,13 +52,13 @@
 		  <!-- Wrapper for slides -->
 		  <div class="carousel-inner" role="listbox">
 		    <div class="loginImg item active">
-		    	<img alt="图片" src="img/a.jpg" width="100%" height="100"/>
+		    	<img alt="图片" src="img/a.jpg" width="100%" height="100%"/>
 		    </div>
 		    <div class="loginImg item">
-		      <img alt="图片" src="img/a.jpg" width="100%" height="100"/>
+		      <img alt="图片" src="img/a.jpg" width="100%" height="100%"/>
 		    </div>
 		    <div class="loginImg item">
-		      <img alt="图片" src="img/a.jpg" width="100%" height="100"/>
+		      <img alt="图片" src="img/a.jpg" width="100%" height="100%"/>
 		    </div>
 		  </div>
 		  <!-- Controls -->
