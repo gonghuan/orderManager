@@ -30,6 +30,11 @@ public class GoodsController {
 		return resultSet;
 	}
 	
+	/*@RequestMapping(value="/getAllGoodsName")
+	public @ResponseBody List<String> getAllGoodsName(){
+		List<String> resultSet = goodsService.getAllGoodsName();
+		return resultSet;
+	}*/
 	@RequestMapping(value="/getAllGoodsName")
 	public @ResponseBody List<String> getAllGoodsName(){
 		List<String> resultSet = goodsService.getAllGoodsName();
@@ -40,5 +45,10 @@ public class GoodsController {
 	public @ResponseBody GoodsInfoDto getDetailGoodsInfoByName(@RequestParam String name){
 		GoodsInfoDto result = goodsService.getDetailGoodsInfoByName(name);
 		return result;
+	}
+	
+	@RequestMapping(value="getSpecifications")
+	public @ResponseBody List<String> getSpecifications(@RequestParam String name){
+		return goodsService.getSpecifications(name);
 	}
 }

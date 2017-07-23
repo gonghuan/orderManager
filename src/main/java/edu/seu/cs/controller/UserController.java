@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.seu.cs.model.User;
+import edu.seu.cs.model.UserInMysql;
 import edu.seu.cs.service.UserService;
 @Controller
 public class UserController {
@@ -26,10 +27,25 @@ public class UserController {
 		return user;
 	}
 	
-	@RequestMapping(value="login", method=RequestMethod.POST)
+	/*@RequestMapping(value="login", method=RequestMethod.POST)
 	public String login(@RequestParam String shortName, HttpServletRequest request, Model model){
 		shortName = shortName.trim().toUpperCase();
 		User user = userService.login(shortName);
+		if(user != null){
+			request.getSession().setAttribute("user", user);
+			return "/index";
+		}else{
+			model.addAttribute("error", "error");
+			return "/login";
+		}
+	}*/
+	
+	@RequestMapping(value="login", method=RequestMethod.POST)
+	public String login(@RequestParam String name, @RequestParam String password, HttpServletRequest request, Model model){
+		name = name.trim().toUpperCase();
+		password = password.trim();
+		
+		UserInMysql user = userService.login(name, password);
 		if(user != null){
 			request.getSession().setAttribute("user", user);
 			return "/index";

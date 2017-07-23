@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.seu.cs.mapper2.GoodsMapper2">
+	<resultMap id="BaseResultMap" type="edu.seu.cs.dto.GoodsInfoDto">
+		<result column="code" property="code"></result>
+		<result column="name" property="name"></result>
+		<result column="unit" property="unit"></result>
+		<result column="specs" property="spec"></result>
+		<result column="onhand" property="onHand"></result>
+	</resultMap>
+	
+	<select id="selectAllGoodsName" resultType="java.lang.String">
+		select distinct name from goodsForLevels;
+	</select>
+	
+	<select id="selectNull" resultType="java.lang.String">
+		select code from goodsForLevels where name = null or name = ''
+	</select>
+	
+	<select id="getDetailGoodsInfoByName" resultMap="BaseResultMap">
+		select goods.goodsid, goods.code, goods.name, goods.unit, goods.specs, sum(detail.inqty - detail.outqty) as onhand 
+		from goods 
+		left join detailbillflow detail on goods.goodsid = detail.goodsid
+		where goods.name like #{name}
+		group by goods.goodsid, goods.code, goods.name, goods.unit, goods.specs
+	</select>
+	
+	<select id="selectSpecifications" resultType="java.lang.String">
+		select distinct specification from goodsForLevels where name like #{name} or code like #{name}
+	</select>
+	
+</mapper>

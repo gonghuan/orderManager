@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="edu.seu.cs.model.User" errorPage="error.jsp"%>
+    pageEncoding="UTF-8" import="edu.seu.cs.model.UserInMysql" errorPage="error.jsp"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
@@ -27,7 +27,7 @@
 </head>
 </head>
 <body>
-<%User user = (User)session.getAttribute("user");%>
+<%UserInMysql user = (UserInMysql)session.getAttribute("user");%>
 <div class="navbar navbar-inverse navbar-fixed-top">
       <div style="color:#cccccc;padding-left:20px;" >
         <h3>千发配货系统</h3>
@@ -48,8 +48,8 @@
                                 <label for="clientid" class="col-sm-4 control-label">客户名</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" id="clientid" readonly="readonly" 
-                                    value="${user.getShortName() }">
-                                    <input type="hidden" id="clientId" value="${user.getClientId() }">
+                                    value="${user.getName() }">
+                                    <input type="hidden" id="clientId" value="${user.getId() }">
                                 </div>
                             </div>
                             <div id="contectorDiv" class="form-group col-md-6">
@@ -77,7 +77,7 @@
                     <!-- 重复开始 -->
                     	<div id="goodPanel">
 	                        <div class="panel-body row">
-	                        	<div id="goodsNameDiv" class="form-group col-md-4">
+	                        	<div id="goodsNameDiv" class="form-group col-md-4 goodsNameDiv">
 	                                <label for="goodsName" class="col-sm-3 control-label">货品名称</label>
 	                                <div class="col-sm-9">
 	                                	<select style="font-size:16px;height:36px;width:200px;textalign:center" class="selectGoodsName">
@@ -86,32 +86,54 @@
 	                                	<input class="goodsid" type="hidden">
 	                                </div>
 	                            </div>
-	                            <div class="form-group col-md-2 onHandDiv">
+	                            
+	                            <div id="goodsSpecificationDiv" class="form-group col-md-4 goodsSpecificationDiv">
+	                                <label for="goodsSpecification" class="col-sm-3 control-label">货品规格</label>
+	                                <div class="col-sm-9">
+	                                	<select style="font-size:16px;height:36px;width:200px;textalign:center" class="selectGoodsSpecification">
+	                                	<option value="" selected="selected">请选择货品规格</option>
+	                                	</select>
+	                                	<input class="goodsid" type="hidden">
+	                                </div>
+	                            </div>
+	                            
+	                            <div id="goodsColorDiv" class="form-group col-md-4 goodsColorDiv">
+	                                <label for="goodsColor" class="col-sm-3 control-label">货品颜色</label>
+	                                <div class="col-sm-9">
+	                                	<select style="font-size:16px;height:36px;width:200px;textalign:center" class="selectGoodsColor">
+	                                	<option value="" selected="selected">请选择货品颜色</option>
+	                                	</select>
+	                                	<input class="goodsid" type="hidden">
+	                                </div>
+	                            </div>
+	                            
+                            </div>
+                            <div class="panel-body row">
+                            	<div class="form-group col-md-3 onHandDiv">
 	                                <label for="onhand" class="col-sm-5 control-label">库存</label>
 	                                <div class="col-sm-7">
 	                                    <input type="text" class="form-control onhand" readonly="readonly">
 	                                </div>
 	                            </div>
-	                            <div class="form-group col-md-2 priceDiv">
+	                            <div class="form-group col-md-3 priceDiv">
 	                                <label for="price" class="col-sm-5 control-label">单价</label>
 	                                <div class="col-sm-7">
 	                                    <input type="text" class="form-control price" readonly="readonly">
 	                                </div>
 	                            </div>
-	                            <div class="form-group col-md-2 quantityDiv">
+	                            <div class="form-group col-md-3 quantityDiv">
 	                                <label for="quantity" class="col-sm-5 control-label">数量</label>
 	                                <div class="col-sm-7">
 	                                    <input type="text" class="form-control quantity">
 	                                </div>
 	                            </div>
-	                            <div class="form-group col-md-2 amountDiv">
+	                            <div class="form-group col-md-3 amountDiv">
 	                                <label for="amount" class="col-sm-5 control-label">金额</label>
 	                                <div class="col-sm-7">
 	                                    <input type="text" class="form-control amount" readonly="readonly">
 	                                </div>
 	                            </div>
                             </div>
-                               
                      	</div>
                      	<!-- 重复结束 -->
                      	
@@ -144,13 +166,46 @@
 		
 	});
 	
-	$('select').change(function(){
+	 $('.selectGoodsName').change(function(){
+		 var select = $(this);
+		 var name = $(this).find('option:selected').text();
+		 var selectSpecification = select.parents('.panel-body').find('.goodsSpecificationDiv');
+		 var selectColor = select.parents('.panel-body').find('.goodsColorDiv');
+		 var select1 = selectSpecification.find('.selectGoodsSpecification');
+		 var select2 = selectColor.find('.selectGoodsColor');
+		 select1.empty();
+		 select2.empty();
+		 select1.append("<option value='' selected='selected'>请选择货品规格</option>");
+		 select2.append("<option value='' selected='selected'>请选择货品颜色</option>");
+		 $.ajax({
+			 url: 'getSpecifications',
+			 data:{'name':name},
+			 dataType: 'json',
+			 type: 'post',
+			 success: function(data){
+				 for(var i = 0; i < data.length; i++){
+					 select1.append("<option value="+data[i]+">"+data[i] + "</option>");
+				 }
+			 },
+			 error: function(data, status, e){
+				 alert('发生未知错误');
+			 }
+		 });
+	 });
+	 
+	 /* $('.selectGoodsSpecification').change(function(){
+		 var select = $(this);
+		 var name = $(this).parents('.panel-body').find('.goodsNameDiv').find('.selectGoodsName').text();
+		 var 
+	 }); */
+	
+	 /* $('select').change(function(){
 		var select = $(this);
 		var name = $(this).find( 'option:selected').text();
 		$.ajax({
 			url: 'getDetailGoodsInfoByName',
 			data: {'name' : name},
-			datatype: 'json',
+			dataType: 'json',
 			type: 'post',
 			success: function(data){
 				select.parents('.panel-body').find('.onhand').val(data.onHand);
@@ -161,7 +216,7 @@
 				alert('发生未知错误');
 			}
 		});
-	});
+	}); */
 	
 	$('.quantity').blur(function(){
 		var quantity = $(this).val();
@@ -254,41 +309,6 @@
 			parent.find('.amount').val(quantity*price);
 		});
 		
-		 /*$('#uploadInfoBtn').click(function(){
-			var clientId = $('#clientId').val();
-			var shortName = $('#clientid').val();
-			var contector = $('#contector').val();
-			var phone = $('#phone').val();
-			var shipto = $('#shipto').val();
-			var dataArray = new Array();
-			var panels = $('#goodPanel .panel-body');
-			for(var i = 0; i < panels.length; i++){
-				var panel = $(panels[i]);
-				var goodsName = panel.find('select option:selected').text();
-				var onhand = panel.find('.onhand').val();
-				var price = panel.find('price').val();
-				var quantity = panel.find('.quantity').val();
-				var amount = panel.find('.amount').val();
-				var goodsId = panel.find('.goodsid').val();
-				var data = "{'goodsName':"+ goodsName + ", 'onhand':"+ onhand+", 'price':"+price+", 'quantity':"+
-					quantity+", 'amount':"+amount+",'goodsId':"+goodsId+"}";
-				//var data = eval('('+tmp+')');
-				dataArray[i]=data;
-			}
-			$.ajax({
-				url: 'insertOrderAndDetail',
-				type: 'post',
-				dataType: 'json', 
-				data: {'clientId' : clientId, 'shortName':shortName, 'contector': contector, 'phone':phone, 'shipto':shipto,
-					'list': dataArray.join('#')},
-				success: function(data){
-					alert('操作成功');
-				},
-				error: function(data, status, e){
-					alert('操作失败');
-				}	
-			});
-		}); */
 	});
 
 

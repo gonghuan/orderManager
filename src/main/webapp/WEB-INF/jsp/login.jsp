@@ -85,15 +85,18 @@
 			
 			<div class="row" style="padding:20px;height:45px;margin-bottom:10px;">
 				<form action="login" method="post">
-					<div class="col-md-2"></div>
+					<div class="col-md-1"></div>
 					<div class="col-md-3" style="height:45px;">
-						<input type="text"  placeholder="请输入用户名" name="shortName" style="width:100%;height:42px; font-size:18px;text-align:center">
+						<input type="text"  placeholder="请输入用户名" name="name" style="width:100%;height:42px; font-size:18px;text-align:center">
 					</div>
 			        
-			        <div class="col-md-2"></div>
+			        <div class="col-md-1"></div>
 			        <!--input type="password" class="input-block-level" placeholder="Password"-->
-			        
 			        <div class="col-md-3">
+			        	<input type="text" placeholder="请输入登录密码" name="password" style="width:100%;height:42px; font-size:18px;text-align:center">
+			        </div>
+			        <div class="col-md-1"></div>
+			        <div class="col-md-2">
 						<button class="btn btn-large btn-primary col-md-2" type="submit" style="width:100%;height:42px; font-size:18px;">登录</button>
 					</div>
 			        

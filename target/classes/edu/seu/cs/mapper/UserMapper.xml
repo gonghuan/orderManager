@@ -12,4 +12,12 @@
 		select clientid, clientkind, case when isdouble = 'F' then 0 else 1 end as isdouble, code, shortname
 		from client where shortname = #{name}
 	</select>
+	
+	<update id="updatePsd">
+		update user set password = #{1} where id = #{0}
+	</update>
+	
+	<select id="selectPsd" resultType="String" parameterType="String">
+		select password from user where id=#{id}
+	</select>
 </mapper>
