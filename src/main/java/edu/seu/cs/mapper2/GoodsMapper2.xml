@@ -7,6 +7,8 @@
 		<result column="unit" property="unit"></result>
 		<result column="specs" property="spec"></result>
 		<result column="onhand" property="onHand"></result>
+		<result column="price" property="price" jdbcType="DOUBLE"></result>
+		<result column="imagepath" property="imagePath"></result>
 	</resultMap>
 	
 	<select id="selectAllGoodsName" resultType="java.lang.String">
@@ -27,6 +29,42 @@
 	
 	<select id="selectSpecifications" resultType="java.lang.String">
 		select distinct specification from goodsForLevels where name like #{name} or code like #{name}
+	</select>
+	
+	<select id="selectColors" resultType="java.lang.String">
+		select distinct color from goodsForLevels where 1=1 
+		<if test="name != null">
+			and name like #{name}
+		</if>
+		<if test="specification != null and specification != ''">
+			and specification like #{specification}
+		</if>
+	</select>
+	
+	<select id="selectCodeAndPrice" resultMap="BaseResultMap">
+		select code, ifnull(${level}, 1) as price, imagepath from goodsForLevels where 1=1 
+		<if test="name != null">
+			and name like #{name}
+		</if>
+		<if test="specification != null and specification != ''">
+			and specification like #{specification}
+		</if>
+		<if test="color != null and color != ''">
+			and color like #{color}
+		</if>
+	</select>
+	
+	<select id="selectCodeAndPriceByCode" resultMap="BaseResultMap">
+		select code, ifnull(${level}, 1) as price, imagepath from goodsForLevels where 1=1 
+		<if test="code != null">
+			and code like #{code}
+		</if>
+		<if test="specification != null and specification != ''">
+			and specification like #{specification}
+		</if>
+		<if test="color != null and color != ''">
+			and color like #{color}
+		</if>
 	</select>
 	
 </mapper>

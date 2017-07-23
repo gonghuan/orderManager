@@ -51,4 +51,15 @@ public class GoodsController {
 	public @ResponseBody List<String> getSpecifications(@RequestParam String name){
 		return goodsService.getSpecifications(name);
 	}
+	
+	@RequestMapping(value="getColors")
+	public @ResponseBody List<String> getColors(@RequestParam String name, @RequestParam String specification){
+		return goodsService.getColors(name, specification);
+	}
+	
+	@RequestMapping(value="getDetailGoodsInfo")
+	public @ResponseBody GoodsInfoDto getDetailGoodsInfo(@RequestParam String name, @RequestParam String specification,
+			@RequestParam String color, @RequestParam String level){
+		return goodsService.getDetailGoodsInfo(name, specification, color, level);
+	}
 }

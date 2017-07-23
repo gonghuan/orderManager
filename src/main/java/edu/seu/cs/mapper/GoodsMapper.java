@@ -8,4 +8,5 @@ public interface GoodsMapper {
 	public String testSelect(String bankCode);
 	public List<String> selectAllGoodsName();
 	public GoodsInfoDto getDetailGoodsInfoByName(String name);
+	public GoodsInfoDto getDetailGoodsInfoByCode(String code);
 }

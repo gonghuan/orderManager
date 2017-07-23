@@ -50,6 +50,7 @@
                                     <input type="text" class="form-control" id="clientid" readonly="readonly" 
                                     value="${user.getName() }">
                                     <input type="hidden" id="clientId" value="${user.getId() }">
+                                    <input type="hidden" id="level" value="${user.getLevel() }">
                                 </div>
                             </div>
                             <div id="contectorDiv" class="form-group col-md-6">
@@ -193,11 +194,51 @@
 		 });
 	 });
 	 
-	 /* $('.selectGoodsSpecification').change(function(){
+	 $('.selectGoodsSpecification').change(function(){
 		 var select = $(this);
-		 var name = $(this).parents('.panel-body').find('.goodsNameDiv').find('.selectGoodsName').text();
-		 var 
-	 }); */
+		 var name = $(this).parents('.panel-body').find('.goodsNameDiv').find('.selectGoodsName').find('option:selected').text();
+		 var specification = select.find('option:selected').text();
+		 var selectColor = select.parents('.panel-body').find('.goodsColorDiv');
+		 var select1 = selectColor.find('.selectGoodsColor');
+		 select1.empty();
+		 select1.append("<option value='' selected='selected'>请选择货品颜色</option>");
+		 $.ajax({
+			 url: 'getColors',
+			 data: {'name':name, 'specification':specification},
+			 dataType: 'json',
+			 type: 'post',
+			 success: function(data){
+				 for(var i = 0; i < data.length; i++){
+					 select1.append("<option value="+data[i]+">"+data[i] + "</option>");
+				 }
+			 },
+			 error: function(data, status, e){
+				 alert('发生未知错误');
+			 }
+		 });
+	 }); 
+	 
+	 $('.selectGoodsColor').change(function(){
+		 var name = $(this).parents('.panel-body').find('.goodsNameDiv').find('.selectGoodsName').find('option:selected').text();
+		 var specification = $(this).parents('.panel-body').find('.goodsSpecificationDiv').find('.selectGoodsSpecification').find('option:selected').text();
+		 var color = $(this).find('option:selected').text();
+		 var select = $(this);
+		 var level = $('#level').val();
+		 $.ajax({
+			 url: 'getDetailGoodsInfo',
+			 data: {'name':name, 'specification':specification, 'color':color, 'level':level},
+			 dataType: 'json',
+			 type: 'post',
+			 success: function(data){
+				select.parents('.panel-body').next().find('.onhand').val(data.onHand);
+				select.parents('.panel-body').next().find('.price').val(data.price);
+				select.parents('.panel-body').next().find('.goodsid').val(data.goodsId);
+			 },
+			 error: function(data, status, e){
+				 alert("发生未知错误");
+			 }
+		 });
+	 });
 	
 	 /* $('select').change(function(){
 		var select = $(this);

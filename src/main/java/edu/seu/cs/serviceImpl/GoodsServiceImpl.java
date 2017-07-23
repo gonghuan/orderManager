@@ -45,5 +45,24 @@ public class GoodsServiceImpl implements GoodsService {
 		// TODO Auto-generated method stub
 		return goodsMapper2.selectSpecifications(name);
 	}
+	@Override
+	public List<String> getColors(String name, String specification) {
+		// TODO Auto-generated method stub
+		return goodsMapper2.selectColors(name, specification);
+	}
+	@Override
+	public GoodsInfoDto getDetailGoodsInfo(String name, String specification, String color, String level) {
+		// TODO Auto-generated method stub
+		level = "PriceFor" + level;
+		GoodsInfoDto tmp = goodsMapper2.selectCodeAndPrice(name, specification, color, level);
+		GoodsInfoDto result = null;
+		if(tmp == null){
+			tmp = goodsMapper2.selectCodeAndPriceByCode(name, specification, color, level);
+		}
+		String code = tmp.getCode();
+		result = goodsMapper.getDetailGoodsInfoByCode(code);
+		result.setPrice(tmp.getPrice());
+		return result;
+	}
 
 }

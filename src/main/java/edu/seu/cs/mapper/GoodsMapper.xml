@@ -7,6 +7,7 @@
 		<result column="unit" property="unit"></result>
 		<result column="specs" property="spec"></result>
 		<result column="onhand" property="onHand"></result>
+		<result column="price" property="price"></result>
 	</resultMap>
 	
 	<select id="testSelect" parameterType="String" resultType="String">
@@ -22,6 +23,14 @@
 		from goods 
 		left join detailbillflow detail on goods.goodsid = detail.goodsid
 		where goods.name like #{name}
+		group by goods.goodsid, goods.code, goods.name, goods.unit, goods.specs
+	</select>
+	
+	<select id="getDetailGoodsInfoByCode" resultMap="BaseResultMap">
+		select goods.goodsid, goods.code, goods.name, goods.unit, goods.specs, sum(detail.inqty-detail.outqty) as onhand
+		from goods
+		left join detailbillflow detail on goods.goodsid = detail.goodsid
+		where goods.code like #{code}
 		group by goods.goodsid, goods.code, goods.name, goods.unit, goods.specs
 	</select>
 	

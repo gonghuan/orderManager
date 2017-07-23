@@ -7,7 +7,21 @@ public class GoodsInfoDto {
 	public String unit;	//基本单位
 	public String spec;		//规格
 	public double onHand;	//库存
+	public double price;	//单价
+	public String imagePath;	//图片路径
 	
+	public String getImagePath() {
+		return imagePath;
+	}
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
+	}
 	public int getGoodsId() {
 		return goodsId;
 	}
