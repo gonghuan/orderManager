@@ -21,6 +21,7 @@
       
       }
       
+      
     </style>
     <script src="js/jquery-3.1.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -78,9 +79,9 @@
                     <!-- 重复开始 -->
                     	<div id="goodPanel">
 	                        <div class="panel-body row">
-	                        	<div id="goodsNameDiv" class="form-group col-md-4 goodsNameDiv">
-	                                <label for="goodsName" class="col-sm-3 control-label">货品名称</label>
-	                                <div class="col-sm-9">
+	                        	<div id="goodsNameDiv" class="form-group col-md-3 goodsNameDiv">
+	                                <label for="goodsName" class="col-sm-4 control-label">货品名称</label>
+	                                <div class="col-sm-8">
 	                                	<select style="font-size:16px;height:36px;width:200px;textalign:center" class="selectGoodsName">
 	                                	<option value="" selected="selected">请选择货品类型</option>
 	                                	</select>
@@ -88,9 +89,9 @@
 	                                </div>
 	                            </div>
 	                            
-	                            <div id="goodsSpecificationDiv" class="form-group col-md-4 goodsSpecificationDiv">
-	                                <label for="goodsSpecification" class="col-sm-3 control-label">货品规格</label>
-	                                <div class="col-sm-9">
+	                            <div id="goodsSpecificationDiv" class="form-group col-md-3 goodsSpecificationDiv">
+	                                <label for="goodsSpecification" class="col-sm-4 control-label">货品规格</label>
+	                                <div class="col-sm-8">
 	                                	<select style="font-size:16px;height:36px;width:200px;textalign:center" class="selectGoodsSpecification">
 	                                	<option value="" selected="selected">请选择货品规格</option>
 	                                	</select>
@@ -98,9 +99,9 @@
 	                                </div>
 	                            </div>
 	                            
-	                            <div id="goodsColorDiv" class="form-group col-md-4 goodsColorDiv">
-	                                <label for="goodsColor" class="col-sm-3 control-label">货品颜色</label>
-	                                <div class="col-sm-9">
+	                            <div id="goodsColorDiv" class="form-group col-md-3 goodsColorDiv">
+	                                <label for="goodsColor" class="col-sm-4 control-label">货品颜色</label>
+	                                <div class="col-sm-8">
 	                                	<select style="font-size:16px;height:36px;width:200px;textalign:center" class="selectGoodsColor">
 	                                	<option value="" selected="selected">请选择货品颜色</option>
 	                                	</select>
@@ -108,29 +109,32 @@
 	                                </div>
 	                            </div>
 	                            
+	                            <div class="form-group col-md-3 goodsImageDiv" style="text-align:center;">
+	                            	<img src='' style="width:100px; height:100px;" class="goodsImg">
+	                            </div>
                             </div>
                             <div class="panel-body row">
                             	<div class="form-group col-md-3 onHandDiv">
-	                                <label for="onhand" class="col-sm-5 control-label">库存</label>
-	                                <div class="col-sm-7">
+	                                <label for="onhand" class="col-sm-4 control-label">库存</label>
+	                                <div class="col-sm-8">
 	                                    <input type="text" class="form-control onhand" readonly="readonly">
 	                                </div>
 	                            </div>
 	                            <div class="form-group col-md-3 priceDiv">
-	                                <label for="price" class="col-sm-5 control-label">单价</label>
-	                                <div class="col-sm-7">
+	                                <label for="price" class="col-sm-4 control-label">单价</label>
+	                                <div class="col-sm-8">
 	                                    <input type="text" class="form-control price" readonly="readonly">
 	                                </div>
 	                            </div>
 	                            <div class="form-group col-md-3 quantityDiv">
-	                                <label for="quantity" class="col-sm-5 control-label">数量</label>
-	                                <div class="col-sm-7">
+	                                <label for="quantity" class="col-sm-4 control-label">数量</label>
+	                                <div class="col-sm-8">
 	                                    <input type="text" class="form-control quantity">
 	                                </div>
 	                            </div>
 	                            <div class="form-group col-md-3 amountDiv">
-	                                <label for="amount" class="col-sm-5 control-label">金额</label>
-	                                <div class="col-sm-7">
+	                                <label for="amount" class="col-sm-4 control-label">金额</label>
+	                                <div class="col-sm-8">
 	                                    <input type="text" class="form-control amount" readonly="readonly">
 	                                </div>
 	                            </div>
@@ -233,6 +237,10 @@
 				select.parents('.panel-body').next().find('.onhand').val(data.onHand);
 				select.parents('.panel-body').next().find('.price').val(data.price);
 				select.parents('.panel-body').next().find('.goodsid').val(data.goodsId);
+				if(data.imagePath == null || data.imagePath == ''){
+					data.imagePath = 'images/ooYBAFZcDpGIUCcMAATBPVMssQ4AACydgPfcScABMFV865.jpg';
+				}
+				select.parents('.panel-body').find('.goodsImg').attr('src', data.imagePath);
 			 },
 			 error: function(data, status, e){
 				 alert("发生未知错误");
@@ -311,37 +319,156 @@
 	$('#btn_addDiv').click(function(){
 		var goodItem = document.createElement("div");
 		goodItem.setAttribute("class", "panel-body row"); 
-		
-		goodItem.innerHTML="<div class=\"form-group col-md-4\"><label for=\"goodsName\" class=\"col-sm-3 control-label\">货品名称</label><div class=\"col-sm-9\"><select style=\"font-size:16px;height:36px;width:200px;textalign:center\"  class=\"selectGoodsName\"><option value=\" selected=\"selected\">请选择货品类型</option></select><input class=\"goodsid\" type=\"hidden\"></div></div><div class=\"form-group col-md-2 onhandDiv\"><label for=\"onhand\" class=\"col-sm-5 control-label\">库存</label><div class=\"col-sm-7\"><input type=\"text\" class=\"form-control onhand\" readonly=\"readonly\"></div></div><div class=\"form-group col-md-2 priceDiv\"><label for=\"price\" class=\"col-sm-5 control-label\">单价</label><div class=\"col-sm-7\"><input type=\"text\" class=\"form-control price\" readonly=\"readonly\"></div></div><div class=\"form-group col-md-2 quantityDiv\"><label for=\"quantity\" class=\"col-sm-5 control-label\">数量</label><div class=\"col-sm-7\"><input type=\"text\" class=\"form-control quantity\"></div></div><div class=\"form-group col-md-2 amountDiv\"><label for=\"amount\" class=\"col-sm-5 control-label\">金额</label><div class=\"col-sm-7\"><input type=\"text\" class=\"form-control amount\" readonly=\"readonly\"></div></div>";
-		
+		var str = "<div class='form-group col-md-3 goodsNameDiv'>"+
+        	"<label for='goodsName' class='col-sm-4 control-label'>货品名称</label>"+
+        	"<div class='col-sm-8'>"+
+        		"<select style='font-size:16px;height:36px;width:200px;textalign:center' class='selectGoodsName'>"+
+        		"<option value='' selected='selected'>请选择货品类型</option>"+
+        		"</select>"+
+        		"<input class='goodsid' type='hidden'>"+
+        	"</div>"+
+    	"</div>"+
+    
+    	"<div class='form-group col-md-3 goodsSpecificationDiv'>"+
+        	"<label for='goodsSpecification' class='col-sm-4 control-label'>货品规格</label>"+
+        	"<div class='col-sm-8'>"+
+        		"<select style='font-size:16px;height:36px;width:200px;textalign:center' class='selectGoodsSpecification'>"+
+        		"<option value='' selected='selected'>请选择货品规格</option>"+
+        		"</select>"+
+        		"<input class='goodsid' type='hidden'>"+
+        	"</div>"+
+    	"</div>"+
+    
+    	"<div class='form-group col-md-3 goodsColorDiv'>"+
+        	"<label for='goodsColor' class='col-sm-4 control-label'>货品颜色</label>"+
+        	"<div class='col-sm-8'>"+
+        		"<select style='font-size:16px;height:36px;width:200px;textalign:center' class='selectGoodsColor'>"+
+        		"<option value='' selected='selected'>请选择货品颜色</option>"+
+        		"</select>"+
+        		"<input class='goodsid' type='hidden'>"+
+        	"</div>"+
+    	"</div>"+
+    	
+    	'<div class="form-group col-md-3 goodsImageDiv" style="text-align:center;">'+
+    		'<img src="" style="width:100px; height:100px;" class="goodsImg">'+
+    	'</div>';
+    	
+		goodItem.innerHTML = str;
 		var gPanel = document.getElementById("goodPanel");
+		var hr = document.createElement("hr");
+		gPanel.appendChild(hr);
 		gPanel.appendChild(goodItem);
-		var firstSelect = $('select:first');
-		var lastSelect = $('select:last');
+		
+		var goodsItem = document.createElement("div");
+		goodsItem.setAttribute("class", "panel-body row"); 
+		var str2 = '<div class="form-group col-md-3 onHandDiv">'+
+            '<label for="onhand" class="col-sm-4 control-label">库存</label>'+
+            '<div class="col-sm-8">'+
+                '<input type="text" class="form-control onhand" readonly="readonly">'+
+            '</div>'+
+        '</div>'+
+        '<div class="form-group col-md-3 priceDiv">'+
+            '<label for="price" class="col-sm-4 control-label">单价</label>'+
+            '<div class="col-sm-8">'+
+                '<input type="text" class="form-control price" readonly="readonly">'+
+            '</div>'+
+        '</div>'+
+        '<div class="form-group col-md-3 quantityDiv">'+
+            '<label for="quantity" class="col-sm-4 control-label">数量</label>'+
+            '<div class="col-sm-8">'+
+                '<input type="text" class="form-control quantity">'+
+            '</div>'+
+        '</div>'+
+        '<div class="form-group col-md-3 amountDiv">'+
+            '<label for="amount" class="col-sm-4 control-label">金额</label>'+
+            '<div class="col-sm-8">'+
+                '<input type="text" class="form-control amount" readonly="readonly">'+
+            '</div>'+
+        '</div>';
+		
+		goodsItem.innerHTML = str2;
+		gPanel.appendChild(goodsItem);
+		
+		var firstSelect = $('.selectGoodsName:first');
+		var lastSelect = $('.selectGoodsName:last');
 		lastSelect.html(firstSelect.html());
 		
-		$('select').change(function(){
-			var select = $(this);
-			var name = $(this).find( 'option:selected').text();
-			$.ajax({
-				url: 'getDetailGoodsInfoByName',
-				data: {'name' : name},
-				datatype: 'json',
-				type: 'post',
-				success: function(data){
-					select.parents('.panel-body').find('.onhand').val(data.onHand);
-					select.parents('.panel-body').find('.price').val(1);
-					select.parents('.panel-body').find('.goodsid').val(data.goodsId);
-					/* $('#specInput').val(data.spec);
-					$('#unitInput').val(data.unit);
-					$('#goodsIdInput').val(data.goodsId);
-					$('#onhandInput').val(data.onHand); */
-				},
-				error: function(data, status, e){
-					alert('发生未知错误');
-				}
-			});
-		});
+		$('.selectGoodsName').change(function(){
+			 var select = $(this);
+			 var name = $(this).find('option:selected').text();
+			 var selectSpecification = select.parents('.panel-body').find('.goodsSpecificationDiv');
+			 var selectColor = select.parents('.panel-body').find('.goodsColorDiv');
+			 var select1 = selectSpecification.find('.selectGoodsSpecification');
+			 var select2 = selectColor.find('.selectGoodsColor');
+			 select1.empty();
+			 select2.empty();
+			 select1.append("<option value='' selected='selected'>请选择货品规格</option>");
+			 select2.append("<option value='' selected='selected'>请选择货品颜色</option>");
+			 $.ajax({
+				 url: 'getSpecifications',
+				 data:{'name':name},
+				 dataType: 'json',
+				 type: 'post',
+				 success: function(data){
+					 for(var i = 0; i < data.length; i++){
+						 select1.append("<option value="+data[i]+">"+data[i] + "</option>");
+					 }
+				 },
+				 error: function(data, status, e){
+					 alert('发生未知错误');
+				 }
+			 });
+		 });
+		 
+		 $('.selectGoodsSpecification').change(function(){
+			 var select = $(this);
+			 var name = $(this).parents('.panel-body').find('.goodsNameDiv').find('.selectGoodsName').find('option:selected').text();
+			 var specification = select.find('option:selected').text();
+			 var selectColor = select.parents('.panel-body').find('.goodsColorDiv');
+			 var select1 = selectColor.find('.selectGoodsColor');
+			 select1.empty();
+			 select1.append("<option value='' selected='selected'>请选择货品颜色</option>");
+			 $.ajax({
+				 url: 'getColors',
+				 data: {'name':name, 'specification':specification},
+				 dataType: 'json',
+				 type: 'post',
+				 success: function(data){
+					 for(var i = 0; i < data.length; i++){
+						 select1.append("<option value="+data[i]+">"+data[i] + "</option>");
+					 }
+				 },
+				 error: function(data, status, e){
+					 alert('发生未知错误');
+				 }
+			 });
+		 }); 
+		 
+		 $('.selectGoodsColor').change(function(){
+			 var name = $(this).parents('.panel-body').find('.goodsNameDiv').find('.selectGoodsName').find('option:selected').text();
+			 var specification = $(this).parents('.panel-body').find('.goodsSpecificationDiv').find('.selectGoodsSpecification').find('option:selected').text();
+			 var color = $(this).find('option:selected').text();
+			 var select = $(this);
+			 var level = $('#level').val();
+			 $.ajax({
+				 url: 'getDetailGoodsInfo',
+				 data: {'name':name, 'specification':specification, 'color':color, 'level':level},
+				 dataType: 'json',
+				 type: 'post',
+				 success: function(data){
+					select.parents('.panel-body').next().find('.onhand').val(data.onHand);
+					select.parents('.panel-body').next().find('.price').val(data.price);
+					select.parents('.panel-body').next().find('.goodsid').val(data.goodsId);
+					if(data.imagePath == null || data.imagePath == ''){
+						data.imagePath = 'images/ooYBAFZcDpGIUCcMAATBPVMssQ4AACydgPfcScABMFV865.jpg';
+					}
+					select.parents('.panel-body').find('.goodsImg').attr('src', data.imagePath);
+				 },
+				 error: function(data, status, e){
+					 alert("发生未知错误");
+				 }
+			 });
+		 });
 		
 		$('.quantity').blur(function(){
 			var quantity = $(this).val();

@@ -8,6 +8,7 @@
 		<result column="specs" property="spec"></result>
 		<result column="onhand" property="onHand"></result>
 		<result column="price" property="price"></result>
+		<result column="imagepath" property="imagePath"></result>
 	</resultMap>
 	
 	<select id="testSelect" parameterType="String" resultType="String">
