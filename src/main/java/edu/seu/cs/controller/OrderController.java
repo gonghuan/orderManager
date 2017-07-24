@@ -80,7 +80,7 @@ public class OrderController {
 		
 		int i = 0;
 		double amount=0.0;
-		String[] list = strs.split("\\$");
+		String[] list = strs.split("\\$+");
 		while(i < list.length){
 			String str = list[i];
 			str = str.substring(1, str.length() - 1);

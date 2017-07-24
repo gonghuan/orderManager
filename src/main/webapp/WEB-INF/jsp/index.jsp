@@ -86,6 +86,7 @@
 	                                	<option value="" selected="selected">请选择货品类型</option>
 	                                	</select>
 	                                	<input class="goodsid" type="hidden">
+	                                	<input class="goodsNameInput" type="hidden">
 	                                </div>
 	                            </div>
 	                            
@@ -236,7 +237,8 @@
 			 success: function(data){
 				select.parents('.panel-body').next().find('.onhand').val(data.onHand);
 				select.parents('.panel-body').next().find('.price').val(data.price);
-				select.parents('.panel-body').next().find('.goodsid').val(data.goodsId);
+				select.parents('.panel-body').find('.goodsid').val(data.goodsId);
+				select.parents('.panel-body').find('.goodsNameInput').val(data.name);
 				if(data.imagePath == null || data.imagePath == ''){
 					data.imagePath = 'images/ooYBAFZcDpGIUCcMAATBPVMssQ4AACydgPfcScABMFV865.jpg';
 				}
@@ -283,13 +285,15 @@
 		var shipto = $('#shipto').val();
 		var dataArray = new Array();
 		var panels = $('#goodPanel .panel-body');
-		for(var i = 0; i < panels.length; i++){
+		var i = 0;
+		while(i < panels.length){
 			var panel = $(panels[i]);
-			var goodsName = panel.find('select option:selected').text();
-			var onhand = panel.find('.onhand').val();
-			var price = panel.find('.price').val();
-			var quantity = panel.find('.quantity').val();
-			var amount = panel.find('.amount').val();
+			var panelNext = $(panels[i+1]);
+			var goodsName = panel.find('.goodsNameInput').val();
+			var onhand = panelNext.find('.onhand').val();
+			var price = panelNext.find('.price').val();
+			var quantity = panelNext.find('.quantity').val();
+			var amount = panelNext.find('.amount').val();
 			var goodsId = panel.find('.goodsid').val();
 			if(quantity == null || quantity == '') quantity = 0;
 			if(amount == null || quantity == '') amount = 0;
@@ -297,6 +301,7 @@
 				quantity+', "amount":'+amount+',"goodsId":'+goodsId+'}';
 			//var data = eval('('+tmp+')');
 			dataArray[i]=data;
+			i = i + 2;
 		}
 		$.ajax({
 			url: 'insertOrderAndDetail',
@@ -326,6 +331,7 @@
         		"<option value='' selected='selected'>请选择货品类型</option>"+
         		"</select>"+
         		"<input class='goodsid' type='hidden'>"+
+        		'<input class="goodsNameInput" type="hidden">'+
         	"</div>"+
     	"</div>"+
     
@@ -458,7 +464,8 @@
 				 success: function(data){
 					select.parents('.panel-body').next().find('.onhand').val(data.onHand);
 					select.parents('.panel-body').next().find('.price').val(data.price);
-					select.parents('.panel-body').next().find('.goodsid').val(data.goodsId);
+					select.parents('.panel-body').find('.goodsid').val(data.goodsId);
+					select.parents('.panel-body').find('.goodsNameInput').val(data.name);
 					if(data.imagePath == null || data.imagePath == ''){
 						data.imagePath = 'images/ooYBAFZcDpGIUCcMAATBPVMssQ4AACydgPfcScABMFV865.jpg';
 					}
