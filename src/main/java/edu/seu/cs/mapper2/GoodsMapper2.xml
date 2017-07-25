@@ -55,7 +55,7 @@
 	</select>
 	
 	<select id="selectCodeAndPriceByCode" resultMap="BaseResultMap">
-		select code, ifnull(${level}, 1) as price, imagepath from goodsForLevels where 1=1 
+		select code, ifnull(${level}, 1) as price, imagePath from goodsForLevels where 1=1 
 		<if test="code != null">
 			and code like #{code}
 		</if>
@@ -66,5 +66,13 @@
 			and color like #{color}
 		</if>
 	</select>
+	
+	<select id="selectAllCodeAndImg" resultMap="BaseResultMap">
+		select code, ifnull(imagepath, '') as imagepath from goodsForLevels;
+	</select>
+	
+	<update id="updateCodeAndImg">
+		update goodsForLevels set imagepath = #{imagePath} where code = #{code}
+	</update>
 	
 </mapper>

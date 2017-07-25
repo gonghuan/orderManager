@@ -16,4 +16,6 @@ public interface GoodsMapper2 {
 			@Param(value="color") String color, @Param(value="level") String level);
 	public GoodsInfoDto selectCodeAndPriceByCode(@Param(value="code") String code, @Param(value = "specification") String specification, 
 			@Param(value="color") String color, @Param(value="level") String level);
+	public List<GoodsInfoDto> selectAllCodeAndImg();
+	public void updateCodeAndImg(@Param(value="code") String code, @Param(value="imagePath") String imagePath);
 }

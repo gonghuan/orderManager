@@ -48,6 +48,9 @@ public class UserController {
 		UserInMysql user = userService.login(name, password);
 		if(user != null){
 			request.getSession().setAttribute("user", user);
+			if(user.getName().equals("admin")){
+				return "/uploadImage";
+			}
 			return "/index";
 		}else{
 			model.addAttribute("error", "error");

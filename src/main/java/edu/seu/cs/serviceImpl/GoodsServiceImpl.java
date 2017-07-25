@@ -62,7 +62,18 @@ public class GoodsServiceImpl implements GoodsService {
 		String code = tmp.getCode();
 		result = goodsMapper.getDetailGoodsInfoByCode(code);
 		result.setPrice(tmp.getPrice());
+		result.setImagePath(tmp.getImagePath());
 		return result;
+	}
+	@Override
+	public List<GoodsInfoDto> getAllCodeAndImg() {
+		// TODO Auto-generated method stub
+		return goodsMapper2.selectAllCodeAndImg();
+	}
+	@Override
+	public void setCodeAndImg(String code, String imagePath) {
+		// TODO Auto-generated method stub
+		goodsMapper2.updateCodeAndImg(code, imagePath);
 	}
 
 }
