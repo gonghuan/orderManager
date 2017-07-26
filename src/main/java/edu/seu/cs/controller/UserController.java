@@ -51,6 +51,9 @@ public class UserController {
 			if(user.getName().equals("admin")){
 				return "/uploadImage";
 			}
+			if(user.getLevel().equals("AA")){
+				return "/indexAA";
+			}
 			return "/index";
 		}else{
 			model.addAttribute("error", "error");

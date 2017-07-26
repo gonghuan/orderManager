@@ -16,4 +16,8 @@ public interface GoodsService {
 	public GoodsInfoDto getDetailGoodsInfo(String name, String specification, String color, String level);
 	public List<GoodsInfoDto> getAllCodeAndImg();
 	public void setCodeAndImg(String code, String imagePath);
+	public List<String> getAllGoodsNameForAA();
+	public GoodsInfoDto getDetailGoodsInfoForAA(String code);
+	public List<GoodsInfoDto> getAllCodeAndImgForAA();
 }
+

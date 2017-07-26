@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import edu.seu.cs.dto.GoodsInfoDto;
 import edu.seu.cs.mapper.GoodsMapper;
 import edu.seu.cs.mapper2.GoodsMapper2;
+import edu.seu.cs.mapper2.GoodsMapperAA;
 import edu.seu.cs.service.GoodsService;
 
 @Service
@@ -18,6 +19,9 @@ public class GoodsServiceImpl implements GoodsService {
 	
 	@Resource(name="goodsMapper2")
 	private GoodsMapper2 goodsMapper2;
+	
+	@Resource(name="goodsMapperAA")
+	private GoodsMapperAA goodsMapperAA;
 	
 	@Override
 	public String testSelect(String bankCode) {
@@ -76,4 +80,30 @@ public class GoodsServiceImpl implements GoodsService {
 		goodsMapper2.updateCodeAndImg(code, imagePath);
 	}
 
+	@Override
+	public List<String> getAllGoodsNameForAA(){
+		// TODO Auto-generated method stub
+		List<String> list= goodsMapperAA.selectAllGoodsCode();
+		if(list.contains(null) || list.contains("")){
+			list.remove(null);
+			list.remove("");
+		}
+		return list;
+	}
+	
+	@Override
+	public GoodsInfoDto getDetailGoodsInfoForAA(String code){
+		GoodsInfoDto tmp = goodsMapperAA.getDetailGoodsInfoByCode(code);
+		GoodsInfoDto result = goodsMapper.getDetailGoodsInfoByCode(code);
+		result.setPrice(tmp.getPrice());
+		result.setImagePath(tmp.getImagePath());
+		return result;
+	}
+	
+	@Override
+	public List<GoodsInfoDto> getAllCodeAndImgForAA(){
+		// TODO Auto-generated method stub
+		return goodsMapperAA.selectAllCodeAndImg();
+	}
+	
 }
