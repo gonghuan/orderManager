@@ -56,7 +56,6 @@
 								url: 'uploadImg',
 								data: {'code': code},
 								success: function(data){
-									debugger;
 									$(form).parents('tr').find('.path').text(data);
 									$(file).empty();
 								},

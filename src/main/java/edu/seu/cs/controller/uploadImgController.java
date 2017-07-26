@@ -29,7 +29,9 @@ public class uploadImgController {
 	@RequestMapping(value="uploadImg")
 	public @ResponseBody String uploadImg(@RequestParam(value="file", required=true)MultipartFile file,
 			@RequestParam(value="code")String code, HttpServletRequest request)throws Exception{
-		String contextRoot = request.getSession().getServletContext().getRealPath("images");
+		String contextRoot = request.getSession().getServletContext().getRealPath("/");
+		contextRoot = contextRoot.substring(0, contextRoot.lastIndexOf("webapps"));
+		contextRoot = contextRoot + "images" + File.separator;
 		//String pic_path = contextRoot + "\\" + "images\\";
 		String originName = file.getOriginalFilename();
 		String suffix = originName.substring(originName.lastIndexOf("."), originName.length());
@@ -41,7 +43,7 @@ public class uploadImgController {
 		}
 		file.transferTo(targetFile);
 		String tmp = targetFile.getPath();
-		String databasePath = tmp.substring(tmp.lastIndexOf("images"), tmp.length());
+		String databasePath = "/file/" + tmp.substring(tmp.lastIndexOf(uuid.toString()), tmp.length());
 		goodsService.setCodeAndImg(code, databasePath);
 		return databasePath;
 	}
