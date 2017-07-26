@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.seu.cs.mapper2.GoodsMapperAA">
+	<resultMap id="BaseResultMap" type="edu.seu.cs.dto.GoodsInfoDto">
+		<result column="code" property="code"></result>
+		<result column="name" property="name"></result>
+		<result column="unit" property="unit"></result>
+		<result column="specs" property="spec"></result>
+		<result column="onhand" property="onHand"></result>
+		<result column="price" property="price" jdbcType="DOUBLE"></result>
+		<result column="imagepath" property="imagePath"></result>
+	</resultMap>
+	
+	<select id="selectAllGoodsCode" resultType="java.lang.String">
+		select distinct code from goodsForAA;
+	</select>
+	
+	<select id="getDetailGoodsInfoByCode" resultMap="BaseResultMap">
+		select code, price,imagePath from goodsForAA where code = #{code}
+	</select>
+
+	
+	<select id="selectAllCodeAndImg" resultMap="BaseResultMap">
+		select code, ifnull(imagepath, '') as imagepath from goodsForAA;
+	</select>
+	
+	<update id="updateCodeAndImg">
+		update goodsForAA set imagepath = #{imagePath} where code = #{code}
+	</update>
+	
+</mapper>

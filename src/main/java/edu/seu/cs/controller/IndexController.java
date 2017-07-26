@@ -25,4 +25,9 @@ public class IndexController {
 	public String getUploadImage(){
 		return "/uploadImage";
 	}
+	
+	@RequestMapping(value="indexAA")
+	public String getIndexAA(){
+		return "/indexAA";
+	}
 }
