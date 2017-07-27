@@ -154,9 +154,11 @@
                      	<button id="btn_addDiv" type="button" style="border:none;background:none;"><span class="glyphicon glyphicon-plus" style="color: #5b5b5b; font-size: 28px;" aria-hidden="true"></span></button>
                      	</div>
                     </div>
+                    <c:if test="${user.level != 'Z' }">
                     <div class="form-group col-md-offset-4 col-md-4" id="submitBtn">
                            <button type="button" class="btn btn-success btn-block btn-lg" id="uploadInfoBtn">确定</button>
                     </div>
+                    </c:if>
                 </form>
            </div>
       </div>
