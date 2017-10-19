@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.seu.cs.mapper.OrderMapper">
 	<select id="selectMaxSorderId" resultType="String">
-		select max(sorderid)+1 as sorderid from sorder
+		select max(sorderid)+1 as sorderid from sorder for update
 	</select>
 	<insert id="insertSOrder" parameterType="edu.seu.cs.model.SOrder">
 		insert into sorder

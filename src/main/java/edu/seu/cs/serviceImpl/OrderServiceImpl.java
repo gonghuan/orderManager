@@ -35,13 +35,15 @@ public class OrderServiceImpl implements OrderService{
 	@Transactional
 	public void inserSOrderAndDetail(SOrder sOrder, List<SOrderDetail> list) {
 		// TODO Auto-generated method stub
-		orderMapper.insertSOrder(sOrder);
-		int sOrderId = Integer.parseInt(orderMapper.selectMaxSorderId());
-		Iterator<SOrderDetail> it = list.iterator();
-		while(it.hasNext()){
-			SOrderDetail sOrderDetail = it.next();
-			sOrderDetail.setsOrderId(sOrderId);
-			orderMapper.insertSOrderDetail(sOrderDetail);
+		synchronized(orderMapper){
+			orderMapper.insertSOrder(sOrder);
+			int sOrderId = Integer.parseInt(orderMapper.selectMaxSorderId());
+			Iterator<SOrderDetail> it = list.iterator();
+			while(it.hasNext()){
+				SOrderDetail sOrderDetail = it.next();
+				sOrderDetail.setsOrderId(sOrderId);
+				orderMapper.insertSOrderDetail(sOrderDetail);
+			}
 		}
 	}
 
