@@ -23,7 +23,7 @@
 		select goods.goodsid, goods.code, goods.name, goods.unit, goods.specs, sum(detail.inqty - detail.outqty) as onhand 
 		from goods 
 		left join detailbillflow detail on goods.goodsid = detail.goodsid
-		where goods.name like #{name}
+		where goods.name = #{name}
 		group by goods.goodsid, goods.code, goods.name, goods.unit, goods.specs
 	</select>
 	
@@ -31,7 +31,7 @@
 		select goods.goodsid, goods.code, goods.name, goods.unit, goods.specs, sum(detail.inqty-detail.outqty) as onhand
 		from goods
 		left join detailbillflow detail on goods.goodsid = detail.goodsid
-		where goods.code like #{code}
+		where goods.code = #{code}
 		group by goods.goodsid, goods.code, goods.name, goods.unit, goods.specs
 	</select>
 	

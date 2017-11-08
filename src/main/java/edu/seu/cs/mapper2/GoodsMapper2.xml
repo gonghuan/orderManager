@@ -23,47 +23,47 @@
 		select goods.goodsid, goods.code, goods.name, goods.unit, goods.specs, sum(detail.inqty - detail.outqty) as onhand 
 		from goods 
 		left join detailbillflow detail on goods.goodsid = detail.goodsid
-		where goods.name like #{name}
+		where goods.name = #{name}
 		group by goods.goodsid, goods.code, goods.name, goods.unit, goods.specs
 	</select>
 	
 	<select id="selectSpecifications" resultType="java.lang.String">
-		select distinct specification from goodsForLevels where name like #{name} or code like #{name}
+		select distinct specification from goodsForLevels where name = #{name} or code = #{name}
 	</select>
 	
 	<select id="selectColors" resultType="java.lang.String">
 		select distinct color from goodsForLevels where 1=1 
 		<if test="name != null">
-			and name like #{name}
+			and name = #{name}
 		</if>
 		<if test="specification != null and specification != ''">
-			and specification like #{specification}
+			and specification = #{specification}
 		</if>
 	</select>
 	
 	<select id="selectCodeAndPrice" resultMap="BaseResultMap">
 		select code, ifnull(${level}, 1) as price, imagepath from goodsForLevels where 1=1 
 		<if test="name != null">
-			and name like #{name}
+			and name = #{name}
 		</if>
 		<if test="specification != null and specification != ''">
-			and specification like #{specification}
+			and specification = #{specification}
 		</if>
 		<if test="color != null and color != ''">
-			and color like #{color}
+			and color = #{color}
 		</if>
 	</select>
 	
 	<select id="selectCodeAndPriceByCode" resultMap="BaseResultMap">
 		select code, ifnull(${level}, 1) as price, imagePath from goodsForLevels where 1=1 
 		<if test="code != null">
-			and code like #{code}
+			and code = #{code}
 		</if>
 		<if test="specification != null and specification != ''">
-			and specification like #{specification}
+			and specification = #{specification}
 		</if>
 		<if test="color != null and color != ''">
-			and color like #{color}
+			and color = #{color}
 		</if>
 	</select>
 	
